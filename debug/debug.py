@@ -51,7 +51,7 @@ parser.add_argument(
     '-d', '--directory', metavar='<target_dir>', help='target directory', required=True
 )
 parser.add_argument(
-    '-m', '--module', metavar='<module_name>', help='Python module name', required=True
+    '-m', '--module', metavar='<module_name>', help='Python module name', required=False
 )
 options = parser.parse_args()
 
@@ -63,10 +63,10 @@ declare_project(options.project)
 os.environ['SCADE'] = str(get_scade_home())
 # the code must have been generated prior to the call
 raw_tcl('KcgMF init "%s"' % options.configuration)
-raw_tcl(
-    'ThgCustom PyHG2 "%s" "%s" "%s" -module_name %s'
-    % (options.configuration, options.test, options.directory, options.module)
-)
+args = '"%s" "%s" "%s"' % (options.configuration, options.test, options.directory)
+if options.module:
+    args += ' -module_name ' + options.module
+raw_tcl('ThgCustom PYHG2 %s' % args)
 
 # debug
 """

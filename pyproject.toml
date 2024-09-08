@@ -109,4 +109,4 @@ addopts = "-ra --cov=ansys.scade.pyhg --cov-report html:.cov/html --cov-branch -
 srg = "ansys.scade.pyhg:srg"
 
 [project.entry-points."ansys.scade.test.thg"]
-pyhg66 = "ansys.scade.pyhg.pyhg"
+PyHG266 = "ansys.scade.pyhg.pyhg"

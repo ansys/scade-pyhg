@@ -39,6 +39,8 @@ from ansys.scade.pyhg.values import flatten
 # Generator
 # ---------------------------------------------------------------------------
 
+banner = 'PyHG ' + __version__
+
 
 class PyHG:
     def __init__(self, *args, **kwargs):
@@ -68,13 +70,12 @@ class PyHG:
         procedure: Procedure,
         kcg_target_dir: str,
         target_dir: str,
-        add_args: str,
+        *args: str,
     ):
         # module name
-        add_args_list = add_args.split() if add_args else []
-        if len(add_args_list) > 1:
-            assert add_args_list[0] == '-module_name'
-            self.module = add_args_list[1]
+        if len(args) > 1:
+            assert args[0] == '-module_name'
+            self.module = args[1]
         else:
             self.module = Path(project.pathname).stem.lower()
 
@@ -137,7 +138,7 @@ class PyHG:
             generated_files.append(target_scenario.name)
 
         # copy the thgrt lib module
-        self.thgrt_file_src = Path(__file__).parent.parent / 'lib' / 'thgrt.py'
+        self.thgrt_file_src = Path(__file__).parent / 'lib' / 'thgrt.py'
         copy(self.thgrt_file_src, Path(target_dir))
         # generate the status file
         with open(status_file, 'w', newline='\n') as fd:
@@ -356,50 +357,35 @@ def thg_main(
     target_dir: str,
     *args,
 ):
-    str_args = '[%s]' % ', '.join(args)
-    print(
-        'main: {0} {1} {2} {3} {4} {5} {6}'.format(
-            target,
-            project.pathname,
-            configuration.name,
-            procedure.name,
-            kcg_target_dir,
-            target_dir,
-            str_args,
-        )
-    )
-    print('-----------------------------')
+    # display some banner
+    print(banner)
 
     PyHG().main(target, project, configuration, procedure, kcg_target_dir, target_dir, *args)
 
-
-# display some banner
-banner = 'PyHG ' + __version__
-# print(banner)
 
 # ---------------------------------------------------------------------------
 # raw callbacks for THG
 # ---------------------------------------------------------------------------
 
 
-def on_cycle(client_data: object, line: int, col: int, number: str):
+def on_cycle(client_data: PyHG, line: int, col: int, number: str):
     client_data.on_cycle(line, col, number)
 
 
-def on_comment(client_data: object, line: int, col: int, text: str):
+def on_comment(client_data: PyHG, line: int, col: int, text: str):
     client_data.on_comment(line, col, text)
 
 
-def on_set_tol(client_data: object, line: int, col: int, dip: str, int_tol: str, real_tol: str):
+def on_set_tol(client_data: PyHG, line: int, col: int, dip: str, int_tol: str, real_tol: str):
     client_data.on_set_tol(line, col, dip, int_tol, real_tol)
 
 
-def on_set(client_data: object, line: int, col: int, dip: str, value: object):
+def on_set(client_data: PyHG, line: int, col: int, dip: str, value: object):
     client_data.on_set(line, col, dip, value)
 
 
 def on_check(
-    client_data: object,
+    client_data: PyHG,
     line: int,
     col: int,
     dip: str,
@@ -412,25 +398,25 @@ def on_check(
     client_data.on_check(line, col, dip, value, sustain, int_tol, real_tol, filter)
 
 
-def on_uncheck(client_data: object, line: int, col: int, dip: str):
+def on_uncheck(client_data: PyHG, line: int, col: int, dip: str):
     client_data.on_uncheck(line, col, dip)
 
 
-def on_set_or_check(client_data: object, line: int, col: int, dip: str, value: object):
+def on_set_or_check(client_data: PyHG, line: int, col: int, dip: str, value: object):
     client_data.on_set_or_check(line, col, dip, value)
 
 
-def on_alias(client_data: object, line: int, col: int, alias: str, dip: str):
+def on_alias(client_data: PyHG, line: int, col: int, alias: str, dip: str):
     client_data.on_alias(line, col, alias, dip)
 
 
-def on_alias_value(client_data: object, line: int, col: int, alias: str, value: object):
+def on_alias_value(client_data: PyHG, line: int, col: int, alias: str, value: object):
     client_data.on_alias_value(line, col, alias, value)
 
 
-def on_notify(client_data: object, line: int, col: int, msg: str):
+def on_notify(client_data: PyHG, line: int, col: int, msg: str):
     client_data.on_notify(line, col, msg)
 
 
-def on_error(client_data: object, line: int, col: int, msg: str):
+def on_error(client_data: PyHG, line: int, col: int, msg: str):
     client_data.on_error(line, col, msg)

@@ -32,6 +32,9 @@ except (importlib_metadata.PackageNotFoundError, AttributeError):
     __version__ = '0.0.0'
 
 
+TARGET = 'PYHG2'
+
+
 def srg() -> str:
     """Path of the SCADE Studio registry file."""
     # the package's srg file is located in the same directory

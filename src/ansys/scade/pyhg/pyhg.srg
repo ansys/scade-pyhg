@@ -1,11 +1,11 @@
-[Scade/TestTool/Targets/PyHG2]
+[Scade/TestTool/Targets/PYHG2]
 "Name"="PYHG2"
 "DisplayName"="Python Target Test Environment  2"
-"Server1"="PyHGSettings"
+"Server1"="PyHG2Settings"
 
-[xStudio/Work Interfaces/PyHG2Settings]
+[Studio/Work Interfaces/PyHG2Settings]
 "Pathname"="ETCUST.DLL"
 "Products"="SC"
 
-[xCustom/Studio/Extensions/PyHG2Settings]
-"Pathname"="%TARGETDIR%pyhg/scripts/pyhgsettings.tcl"
+[Custom/Studio/Extensions/PyHG2Settings]
+"Package"="ansys.scade.pyhg.settings"

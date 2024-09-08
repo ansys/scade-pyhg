@@ -355,11 +355,12 @@ def thg_main(
     procedure: Procedure,
     kcg_target_dir: str,
     target_dir: str,
-    *args,
+    str_args: str = '',
 ):
     # display some banner
     print(banner)
 
+    args = str_args.split()
     PyHG().main(target, project, configuration, procedure, kcg_target_dir, target_dir, *args)
 
 

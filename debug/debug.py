@@ -65,8 +65,9 @@ os.environ['SCADE'] = str(get_scade_home())
 raw_tcl('KcgMF init "%s"' % options.configuration)
 args = '"%s" "%s" "%s"' % (options.configuration, options.test, options.directory)
 if options.module:
-    args += ' -module_name ' + options.module
-raw_tcl('ThgCustom PYHG2 %s' % args)
+    args += ' {-module_name %s}' % options.module
+cmd = 'ThgCustom PYHG2 %s' % args
+raw_tcl(cmd)
 
 # debug
 """

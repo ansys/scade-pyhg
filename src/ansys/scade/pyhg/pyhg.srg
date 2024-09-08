@@ -1,0 +1,14 @@
+[Scade/TestTool/Targets/PyHG]
+"Name"="PYHG"
+"DisplayName"="Python Target Test Environment"
+"Server1"="PyHGSettings"
+
+[Studio/Work Interfaces/PyHGSettings]
+"Pathname"="ETCUST.DLL"
+"Products"="SC"
+
+[Custom/Studio/Extensions/PyHGSettings]
+"Pathname"="%TARGETDIR%pyhg/scripts/pyhgsettings.tcl"
+
+[PyHG]
+"Pathname"="%TARGETDIR%pyhg/scripts/pyhg.py"

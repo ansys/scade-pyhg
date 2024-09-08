@@ -1,0 +1,158 @@
+name: GitHub CI
+on:
+  pull_request:
+  push:
+    tags:
+      - "*"
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  MAIN_PYTHON_VERSION: '3.10'
+  DOCUMENTATION_CNAME: 'pyhg.scade.docs.pyansys.com'
+  LIBRARY_NAME: 'ansys-scade-pyhg'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  code-style:
+    name: "Code style"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ansys/actions/code-style@v6
+        with:
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+
+  doc-style:
+    name: "Documentation style"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ansys/actions/doc-style@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  smoke-tests:
+    name: "Build and Smoke tests"
+    runs-on: ${{ matrix.os }}
+    needs: [code-style]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ['3.7']
+    steps:
+      - uses: ansys/actions/build-wheelhouse@v6
+        with:
+          library-name: ${{ env.LIBRARY_NAME }}
+          operating-system: ${{ matrix.os }}
+          python-version: ${{ matrix.python-version }}
+
+  tests:
+    name: "Tests"
+    # runs-on: ${{ matrix.os }}
+    runs-on: [self-hosted, 'SCADE']
+    needs: [smoke-tests]
+    strategy:
+      matrix:
+        os: [windows-latest]
+        scade-version: ['24.2']
+      fail-fast: false
+    steps:
+      - name: "Install Git and clone project"
+        uses: actions/checkout@v4
+
+      - uses: ansys/scade-actions/scade-tests-pytest@v1
+        with:
+          checkout: false
+          pytest-extra-args: "--cov=ansys --cov-report=term --cov-branch --cov-report=html:.cov/html --cov-report=xml:.cov/xml"
+          scade-version: ${{ matrix.scade-version }}
+
+      # - name: "Upload coverage reports to Codecov"
+      #   uses: codecov/codecov-action@v4
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     slug: ansys/scade-pyhg
+      #     files: .cov/xml
+
+  doc-build:
+    name: "Build documentation"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [doc-style]
+    steps:
+      - uses: ansys/actions/doc-build@v6
+        with:
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+
+      # - name: "Zipping the examples directory"
+      #   run: |
+      #     sudo apt-get install zip
+      #     zip -r examples.zip ./examples
+#
+      # - name: "Upload zip to artifacts"
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: examples
+      #     path: ./examples.zip
+      #     retention-days: 7
+      #     if-no-files-found: error
+
+  build-library:
+    name: "Build library basic example"
+    runs-on: ubuntu-latest
+    needs: [tests, doc-build]
+    steps:
+      - uses: ansys/actions/build-library@v6
+        with:
+          library-name: ${{ env.LIBRARY_NAME }}
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
+
+  release:
+    name: "Release project"
+    runs-on: ubuntu-latest
+    needs: [build-library]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    steps:
+
+      # - name: "Release to public PyPI"
+      #   uses: ansys/actions/release-pypi-public@v6
+      #   with:
+      #     library-name: ${{ env.LIBRARY_NAME }}
+      #     twine-username: "__token__"
+      #     twine-token: ${{ secrets.PYPI_TOKEN }}
+
+      - name: "Release to GitHub"
+        uses: ansys/actions/release-github@v6
+        with:
+          library-name: ${{ env.LIBRARY_NAME }}
+          additional-artifacts: 'examples'
+
+  doc-deploy-dev:
+    name: "Deploy development documentation"
+    # Deploy development only when merging or pushing to the 'main' branch
+    runs-on: ubuntu-latest
+    needs: [build-library]
+    if: github.event_name == 'push' && !contains(github.ref, 'refs/tags')
+    steps:
+      - uses: ansys/actions/doc-deploy-dev@v6
+        with:
+          doc-artifact-name: 'documentation-html'
+          cname: ${{ env.DOCUMENTATION_CNAME }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  doc-deploy-stable:
+    name: "Deploy stable documentation"
+    # Deploy release documentation when creating a new tag
+    runs-on: ubuntu-latest
+    needs: [release]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    steps:
+      - uses: ansys/actions/doc-deploy-stable@v6
+        with:
+          doc-artifact-name: 'documentation-html'
+          cname: ${{ env.DOCUMENTATION_CNAME }}
+          token: ${{ secrets.GITHUB_TOKEN }}

@@ -36,7 +36,7 @@ from ansys.scade.apitools import declare_project
 from ansys.scade.apitools.info import get_scade_home
 
 # apitools must be imported before using any scade.* import
-# to make sure sys.path is set properly
+# to make sure sys.path is set properly and scade_env is imported
 # isort: split
 
 from scade.code.suite.sctoc import raw_tcl

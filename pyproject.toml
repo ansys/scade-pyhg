@@ -28,7 +28,7 @@ classifiers=[
     "License :: OSI Approved :: MIT License",
     "Operating System :: Microsoft :: Windows",
 ]
-keywords=["Scade", "Wrapper", "Integration"]
+keywords=["Scade", "Test", "Harness"]
 
 [project.optional-dependencies]
 build = [

@@ -1,9 +1,17 @@
+[Scade/TestTool/Targets/PYHG]
+"Expire"="25100"
+
+[Studio/Work Interfaces/PyHGSettings]
+"Expire"="25100"
+
 [Scade/TestTool/Targets/PYHG2]
+"Version"="25100"
 "Name"="PYHG2"
-"DisplayName"="Python Target Test Environment  2"
+"DisplayName"="Python Target Test Environment"
 "Server1"="PyHG2Settings"
 
 [Studio/Work Interfaces/PyHG2Settings]
+"Version"="25100"
 "Pathname"="ETCUST.DLL"
 "Products"="SC"
 

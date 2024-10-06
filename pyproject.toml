@@ -36,16 +36,19 @@ build = [
     "twine==5.1.1"
 ]
 tests = [
-    "pytest==8.3.2",
+    # 8.0.2 at most: https://github.com/microsoft/PTVS/issues/7853
+    "pytest==8.0.2",
     "pytest-cov==5.0.0"
 ]
 doc = [
-    "ansys-sphinx-theme[autoapi]==1.0.7",
+    "ansys-sphinx-theme[autoapi]==1.0.9",
     "jupyter_sphinx==0.5.3",
     "nbsphinx==0.9.5",
     "numpydoc==1.8.0",
     "sphinx==8.0.2",
     "sphinx-autodoc-typehints==2.3.0",
+    "sphinxcontrib-globalsubs==0.1.1",
+    "sphinxcontrib-httpdomain==1.8.1",
     "sphinx-copybutton==0.5.2",
 ]
 
@@ -80,7 +83,8 @@ lint.ignore = [
     "D103",  # Missing docstring in public function
 ]
 
-# TODO: preserve leads to an error, although it is documented
+# TODO: "preserve" leads to an error, although it is documented
+# and used in other repositories
 [tool.ruff.format]
 quote-style = "single"
 
@@ -110,3 +114,51 @@ srg = "ansys.scade.pyhg:srg"
 
 [project.entry-points."ansys.scade.test.thg"]
 PYHG266 = "ansys.scade.pyhg.pyhg"
+
+[tool.towncrier]
+package = "ansys.scade.puhg"
+directory = "doc/changelog.d"
+filename = "doc/source/changelog.rst"
+start_string = ".. towncrier release notes start\n"
+template = "doc/changelog.d/changelog_template.jinja"
+title_format = "`{version} <https://github.com/ansys/scade-pyhg/releases/tag/v{version}>`_ - {project_date}"
+issue_format = "`#{issue} <https://github.com/ansys/scade-pyhg/pull/{issue}>`_"
+
+[[tool.towncrier.type]]
+directory = "added"
+name = "Added"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changed"
+name = "Changed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixed"
+name = "Fixed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "dependencies"
+name = "Dependencies"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "miscellaneous"
+name = "Miscellaneous"
+showcontent = true
+[[tool.towncrier.type]]
+directory = "documentation"
+name = "Documentation"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "maintenance"
+name = "Maintenance"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "test"
+name = "Test"
+showcontent = true

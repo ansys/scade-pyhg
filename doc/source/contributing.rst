@@ -6,14 +6,14 @@ Contribute
 Overall guidance on contributing to a PyAnsys library appears in
 `Contributing <https://dev.docs.pyansys.com/how-to/contributing.html>`_
 in the *PyAnsys developer's guide*. Ensure that you are thoroughly familiar
-with this guide before attempting to contribute to {{Title}}.
+with this guide before attempting to contribute to Ansys SCADE THG for Python.
 
-The following contribution information is specific to {{Title}}.
+The following contribution information is specific to Ansys SCADE THG for Python.
 
 Install in developer mode
 -------------------------
 
-Installing {{Title}} in developer mode allows you to modify the
+Installing Ansys SCADE THG for Python in developer mode allows you to modify the
 source and enhance it.
 
 #. Clone the ``ansys-scade-pyhg`` repository:
@@ -73,7 +73,7 @@ source and enhance it.
 
 Test
 ----
-{{Title}} uses `tox`_ for testing. This tool allows you to
+Ansys SCADE THG for Python uses `tox`_ for testing. This tool allows you to
 automate common development tasks (similar to ``Makefile``), but it is oriented
 towards Python development.
 
@@ -100,7 +100,7 @@ isolated environment, which is the reason why tools like ``tox`` exist.
 
 Use ``pre-commit``
 ^^^^^^^^^^^^^^^^^^
-{{Title}} follows the PEP8 standard as outlined in
+Ansys SCADE THG for Python follows the PEP8 standard as outlined in
 `PEP 8 <https://dev.docs.pyansys.com/coding-style/pep8.html>`_ in
 the *PyAnsys developer's guide* and implements style checking using
 `pre-commit <https://pre-commit.com/>`_.
@@ -162,7 +162,7 @@ the building requirements and then executing the build module:
 Post issues
 -----------
 
-Use the `{{Title}} Issues <https://github.com/ansys/scade-pyhg/issues>`_
+Use the `Ansys SCADE THG for Python Issues <https://github.com/ansys/scade-pyhg/issues>`_
 page to submit questions, report bugs, and request new features. When possible, use
 these templates:
 

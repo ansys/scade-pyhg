@@ -1,12 +1,16 @@
-{{Title}}
-=====================
+Ansys SCADE Test Harness Generator for Python
+=============================================
+
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    getting_started/index
+   usage/index
    contributing
+   changelog
 
 Indices and tables
 -------------------

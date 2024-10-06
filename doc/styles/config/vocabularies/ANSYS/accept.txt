@@ -1,7 +1,7 @@
 ANSYS
 Ansys
 ansys
-{{Title}}
+Ansys SCADE THG for Python
 scade
 Scade
 SCADE

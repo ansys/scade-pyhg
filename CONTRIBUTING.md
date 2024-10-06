@@ -1,8 +1,8 @@
 # Contributing
 
 We absolutely welcome any code contributions and we hope that this
-guide will facilitate an understanding of the {{Title}} code
-repository. It is important to note that while the {{Title}} software
+guide will facilitate an understanding of the Ansys SCADE THG for Python code
+repository. It is important to note that while the Ansys SCADE THG for Python software
 package is maintained by ANSYS and any submissions will be reviewed
 thoroughly before merging, we still seek to foster a community that can
 support user questions and develop new features to make this software

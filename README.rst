@@ -1,5 +1,5 @@
-{{Title}}
-=====================
+Ansys SCADE Test Harness Generator for Python
+=============================================
 |pyansys| |python| |pypi| |GH-CI| |codecov| |MIT| |ruff| |doc|
 
 ..
@@ -40,7 +40,9 @@
 
 Overview
 --------
-{{Title}} is <TODO>.
+Ansys SCADE Test Harness Generator (THG) for Python generates Python test
+scripts from SCADE Tests projects. These Python tests target the Python proxies
+produced by `Ansys SCADE Python Wrapper <https://python-wrapper.scade.docs.pyansys.com/version/stable/getting_started/index.html>`_
 
 Requirements
 ------------
@@ -49,26 +51,26 @@ Ansys SCADE, starting from 2025 R1:
 
 * 2025 R1 and later: Python 3.10
 
-{{Title}} has two installation modes: user and developer. To install for use,
+Ansys SCADE THG for Python has two installation modes: user and developer. To install for use,
 see `Getting started <https://pyhg.scade.docs.pyansys.com/version/stable/getting_started/index.html>`_.
 To install for development, see `Contribute <https://pyhg.scade.docs.pyansys.com/version/stable/contributing.html>`_.
 
 Documentation and issues
 ------------------------
-Documentation for the latest stable release of {{Title}} is hosted at
-`{{Title}} documentation <https://pyhg.scade.docs.pyansys.com/>`_.
+Documentation for the latest stable release of Ansys SCADE THG for Python is hosted at
+`Ansys SCADE THG for Python documentation <https://pyhg.scade.docs.pyansys.com/>`_.
 
 In the upper right corner of the documentation's title bar, there is an option for
 switching from viewing the documentation for the latest stable release to viewing the
 documentation for the development version or previously released versions.
 
-On the `{{Title}} Issues <https://github.com/ansys/scade-pyhg/issues>`_
+On the `Ansys SCADE THG for Python Issues <https://github.com/ansys/scade-pyhg/issues>`_
 page, you can create issues to report bugs and request new features. On the `Discussions <https://discuss.ansys.com/>`_
 page on the Ansys Developer portal, you can post questions, share ideas, and get community feedback.
 
 License
 ~~~~~~~
-{{Title}} is licensed under the MIT license.
+Ansys SCADE THG for Python is licensed under the MIT license.
 
 This toolkit makes no commercial claim over Ansys whatsoever. The use of this toolkit
 requires a legally licensed copy of the Ansys SCADE Suite. For more information,

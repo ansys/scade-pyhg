@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Project id="1" oid_count="72" defaultConfiguration="13">
+<Project id="1" oid_count="78" defaultConfiguration="13">
 	<props>
 		<Prop id="2" name="@STUDIO:PRODUCT">
 			<value>QTE</value>
@@ -257,6 +257,15 @@
 			<value>first</value>
 			<configuration>13</configuration>
 		</Prop>
+		<Prop id="77" name="@PYHG2:P2">
+			<value>ansys.scade.pyhg.lib.thgrt.Thgrt</value>
+			<configuration>13</configuration>
+		</Prop>
+		<Prop id="78" name="@QTE:TARGET_PYHG2">
+			<value>-runtime_class</value>
+			<value>ansys.scade.pyhg.lib.thgrt.Thgrt</value>
+			<configuration>13</configuration>
+		</Prop>
 	</props>
 	<roots>
 		<Folder id="3" extensions="etp;vsp" name="Model">
@@ -273,6 +282,7 @@
 			<elements>
 				<FileRef id="55" persistAs="MainInit.sss"/>
 				<FileRef id="56" persistAs="MainNominal.sss"/>
+				<FileRef id="75" persistAs="Preamble.sss"/>
 			</elements>
 		</Folder>
 		<Folder id="60" extensions="trf" name="Results">

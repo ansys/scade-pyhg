@@ -32,7 +32,7 @@ keywords=["Scade", "Test", "Harness"]
 
 [project.optional-dependencies]
 build = [
-    "build==1.2.1",
+    "build==1.2.2.post1",
     "twine==5.1.1"
 ]
 tests = [
@@ -41,13 +41,13 @@ tests = [
     "pytest-cov==5.0.0"
 ]
 doc = [
-    "ansys-sphinx-theme[autoapi]==1.0.9",
+    "ansys-sphinx-theme[autoapi]==1.1.2",
     "jupyter_sphinx==0.5.3",
     "nbsphinx==0.9.5",
     "numpydoc==1.8.0",
     "sphinx==8.0.2",
     "sphinx-autodoc-typehints==2.3.0",
-    "sphinxcontrib-globalsubs==0.1.1",
+    "sphinxcontrib-globalsubs==0.1.2",
     "sphinxcontrib-httpdomain==1.8.1",
     "sphinx-copybutton==0.5.2",
 ]

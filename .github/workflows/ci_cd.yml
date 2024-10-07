@@ -23,7 +23,7 @@ jobs:
     name: "Code style"
     runs-on: ubuntu-latest
     steps:
-      - uses: ansys/actions/code-style@v7
+      - uses: ansys/actions/code-style@v8
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
@@ -31,7 +31,7 @@ jobs:
     name: "Documentation style"
     runs-on: ubuntu-latest
     steps:
-      - uses: ansys/actions/doc-style@v7
+      - uses: ansys/actions/doc-style@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -45,7 +45,7 @@ jobs:
         os: [ubuntu-latest]
         python-version: ['3.10']
     steps:
-      - uses: ansys/actions/build-wheelhouse@v7
+      - uses: ansys/actions/build-wheelhouse@v8
         with:
           library-name: ${{ env.LIBRARY_NAME }}
           operating-system: ${{ matrix.os }}
@@ -83,7 +83,7 @@ jobs:
     timeout-minutes: 30
     needs: [doc-style]
     steps:
-      - uses: ansys/actions/doc-build@v7
+      - uses: ansys/actions/doc-build@v8
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
@@ -105,7 +105,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [tests, doc-build]
     steps:
-      - uses: ansys/actions/build-library@v7
+      - uses: ansys/actions/build-library@v8
         with:
           library-name: ${{ env.LIBRARY_NAME }}
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
@@ -118,9 +118,11 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: ansys/actions/doc-deploy-changelog@v7
+      - uses: ansys/actions/doc-deploy-changelog@v8
         with:
           token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
+          bot-user: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
+          bot-email: ${{ secrets.PYANSYS_CI_BOT_EMAIL }}
 
   release:
     name: "Release project"
@@ -130,7 +132,7 @@ jobs:
     steps:
 
       - name: "Release to private PyPI"
-        uses: ansys/actions/release-pypi-private@v7
+        uses: ansys/actions/release-pypi-private@v8
         with:
           library-name: ${{ env.LIBRARY_NAME }}
           twine-username: "__token__"
@@ -143,7 +145,7 @@ jobs:
       #     use-trusted-publisher: true
 
       - name: "Release to GitHub"
-        uses: ansys/actions/release-github@v7
+        uses: ansys/actions/release-github@v8
         with:
           library-name: ${{ env.LIBRARY_NAME }}
 
@@ -154,11 +156,13 @@ jobs:
     needs: [build-library]
     if: github.event_name == 'push' && !contains(github.ref, 'refs/tags')
     steps:
-      - uses: ansys/actions/doc-deploy-dev@v7
+      - uses: ansys/actions/doc-deploy-dev@v8
         with:
           doc-artifact-name: 'documentation-html'
           cname: ${{ env.DOCUMENTATION_CNAME }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          bot-user: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
+          bot-email: ${{ secrets.PYANSYS_CI_BOT_EMAIL }}
 
   doc-deploy-stable:
     name: "Deploy stable documentation"
@@ -167,8 +171,10 @@ jobs:
     needs: [release]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
     steps:
-      - uses: ansys/actions/doc-deploy-stable@v7
+      - uses: ansys/actions/doc-deploy-stable@v8
         with:
           doc-artifact-name: 'documentation-html'
           cname: ${{ env.DOCUMENTATION_CNAME }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          bot-user: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
+          bot-email: ${{ secrets.PYANSYS_CI_BOT_EMAIL }}

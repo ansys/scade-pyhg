@@ -32,12 +32,6 @@ tests_result = True
 
 def run_all(dir: Path):
     scenarios = list(Path(dir).glob('*.py'))
-    # check and filter thgrt.py
-    thgrt_file = Path(dir) / 'thgrt.py'
-    if thgrt_file not in scenarios:
-        print('Error, the utility script thgrt.py is not in the scenarios dir {}'.format(str(dir)))
-        exit()
-    scenarios.remove(Path(dir) / 'thgrt.py')
     for scenario in scenarios:
         global tests, tests_result
         print('\nrun {}:\n'.format(scenario.name))
@@ -51,7 +45,7 @@ if __name__ == '__main__':
     script_dir = Path(__file__).parent
 
     if sys.argv[1:]:
-        scenario_dir = script_dir / sys.argv[1:]
+        scenario_dir = script_dir.joinpath(*sys.argv[1:])
     else:
         scenario_dir = script_dir / 'scenarios'
 

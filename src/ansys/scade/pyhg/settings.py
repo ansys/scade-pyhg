@@ -106,6 +106,7 @@ class SettingsPagePyHG(SettingsPageEx):
 
         # controls
         self.ed_module = None
+        self.ed_rt = None
 
     def on_build(self):
         # alignment for the first line
@@ -114,17 +115,34 @@ class SettingsPagePyHG(SettingsPageEx):
         self.ed_module = self.add_edit(y, '&Module name:')
         y += dy
 
+        self.ed_rt = self.add_edit(y, '&Runtime class:')
+        y += dy
+
     def on_display(self, project: Project, configuration: Configuration):
         value = project.get_scalar_tool_prop_def(TARGET, 'P1', '', configuration)
+        assert self.ed_module
         self.ed_module.set_name(value)
+        value = project.get_scalar_tool_prop_def(TARGET, 'P2', '', configuration)
+        if not value:
+            # can't be empty
+            value = 'ansys.scade.pyhg.lib.thgrt.Thgrt'
+        assert self.ed_rt
+        self.ed_rt.set_name(value)
 
     def on_validate(self, project: Project, configuration: Configuration):
-        # property
+        # command line
+        values = []
+        # properties
+        assert self.ed_module
         value = self.ed_module.get_name()
         project.set_scalar_tool_prop_def(TARGET, 'P1', value, '', configuration)
-        # command line
-        values = ['-module_name', value] if value else []
-        project.set_tool_prop_def('QTE', 'TARGET_%s' % TARGET, values, [], configuration)
+        values.extend(['-module_name', value] if value else [])
+        assert self.ed_rt
+        value = self.ed_rt.get_name()
+        project.set_scalar_tool_prop_def(TARGET, 'P2', value, '', configuration)
+        values.extend(['-runtime_class', value] if value else [])
+        # summary for THG
+        project.set_tool_prop_def(TOOL, 'TARGET_%s' % TARGET, values, [], configuration)
 
 
 # ---------------------------------------------------------------------------

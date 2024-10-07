@@ -71,6 +71,6 @@ raw_tcl(cmd)
 
 # debug
 """
-debug command line
+example of debug command lines, relative to the the repository's root directory:
 -p tests/First/Model/First.etp -c KCG -t tests/First/Test/P1.stp -d tests/First/Test/Thg -m first
 """

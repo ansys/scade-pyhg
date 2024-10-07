@@ -24,10 +24,11 @@
 
 
 class Check:
-    def __init__(self, expected: object, sustain: int, tolerance: str, filter_: str):
+    def __init__(self, expected: object, sustain: int, tolerance: float, filter_: str):
         self.expected = expected
         self.sustain = sustain
         self.tolerance = tolerance
+        # not implemented
         self.filter = filter_
 
 
@@ -57,7 +58,7 @@ class Thgrt:
             self.step += 1
 
     def check(
-        self, name: str, expected: object, sustain: int = 1, tolerance: str = '', filter_: str = ''
+        self, name: str, expected: object, sustain: int = 1, tolerance: float = 0, filter_: str = ''
     ):
         self.checks[name] = Check(expected, sustain, tolerance, filter_)
 
@@ -86,11 +87,7 @@ class Thgrt:
 
             # print only failed checks for clarity
             if not passed:
-                print(
-                    'test failed at step {}: {}={} (expected {})'.format(
-                        self.step, name, value, check.expected
-                    )
-                )
+                self.log_failure(self.step, name, value, check.expected)
             self.test_result = self.test_result and passed
 
             if check.sustain == 1:
@@ -100,3 +97,8 @@ class Thgrt:
 
         for name in to_remove:
             self.checks.pop(name)
+
+    def log_failure(self, step: int, name: str, value, expected):
+        print(
+            'test failed at step {}: {}={} (expected {})'.format(self.step, name, value, expected)
+        )

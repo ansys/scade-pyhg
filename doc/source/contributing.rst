@@ -6,14 +6,14 @@ Contribute
 Overall guidance on contributing to a PyAnsys library appears in
 `Contributing <https://dev.docs.pyansys.com/how-to/contributing.html>`_
 in the *PyAnsys developer's guide*. Ensure that you are thoroughly familiar
-with this guide before attempting to contribute to {{Title}}.
+with this guide before attempting to contribute to Ansys SCADE THG for Python.
 
-The following contribution information is specific to {{Title}}.
+The following contribution information is specific to Ansys SCADE THG for Python.
 
 Install in developer mode
 -------------------------
 
-Installing {{Title}} in developer mode allows you to modify the
+Installing Ansys SCADE THG for Python in developer mode allows you to modify the
 source and enhance it.
 
 #. Clone the ``ansys-scade-pyhg`` repository:
@@ -71,9 +71,9 @@ source and enhance it.
       tox
 
 
-Test
-----
-{{Title}} uses `tox`_ for testing. This tool allows you to
+Unit test
+---------
+Ansys SCADE THG for Python uses `tox`_ for testing. This tool allows you to
 automate common development tasks (similar to ``Makefile``), but it is oriented
 towards Python development.
 
@@ -100,7 +100,7 @@ isolated environment, which is the reason why tools like ``tox`` exist.
 
 Use ``pre-commit``
 ^^^^^^^^^^^^^^^^^^
-{{Title}} follows the PEP8 standard as outlined in
+Ansys SCADE THG for Python follows the PEP8 standard as outlined in
 `PEP 8 <https://dev.docs.pyansys.com/coding-style/pep8.html>`_ in
 the *PyAnsys developer's guide* and implements style checking using
 `pre-commit <https://pre-commit.com/>`_.
@@ -148,6 +148,59 @@ However, the recommended way of checking documentation integrity is to use
 
     tox -e doc-html && your_browser_name .tox/doc_out/index.html
 
+Debug and integration test
+--------------------------
+Ansys SCADE Test Harness Generator needs to be registered to SCADE for
+integration testing. Indeed, it is called by SCADE Test Harness Generation.
+
+Install in user mode
+^^^^^^^^^^^^^^^^^^^^
+It is not possible to reuse the virtual environment setup for the repository.
+You must install the package in an environment accessible by SCADE, for
+example its own Python distribution, although this is not advised,
+or the Python 3.10 *user* distribution:
+
+.. code:: bash
+
+   <python310.exe> -m pip install --user --editable .
+
+You can reuse any ``<install>\SCADE\contrib\Python310\python.exe``
+or Python 3.10 installation on your computer.
+
+Debug
+^^^^^
+The ``.\tests\Debug\debug.py`` script uses internal SCADE Test Harness Generation
+entry points to start a debug session for the scripts.
+
+You must use the Python 3.10 environment delivered with SCADE, located in
+``<install>\contrib\Python310``.
+
+For example:
+``C:\Program Files\ANSYS Inc\v251\SCADE\contrib\Python310``.
+
+Configure PYTHONPATH to refer to ``<install>\SCADE\bin`` and
+``<install>\SCADE\APIs\Python\lib``. For example:
+
+.. code:: bash
+
+   set PYTHONPATH=C:\Program Files\ANSYS Inc\v251\SCADE\SCADE\bin;C:\Program Files\ANSYS Inc\v251\SCADE\SCADE\APIs\Python\lib
+
+Refer to ``.\tests\Debug\debug.py`` for its command line parameters.
+
+Run the integration tests
+^^^^^^^^^^^^^^^^^^^^^^^^^
+These are manual tests. Refer to the test procedures, contained in each test
+directory as readme files.
+
+Uninstall
+^^^^^^^^^
+Once the test or debug sessions are completed, you may uninstall the package
+as follows:
+
+.. code:: bash
+
+   <python310.exe> -m pip uninstall ansys-scade-pyhg
+
 Distribute
 ----------
 If you would like to create either source or wheel files, start by installing
@@ -162,7 +215,7 @@ the building requirements and then executing the build module:
 Post issues
 -----------
 
-Use the `{{Title}} Issues <https://github.com/ansys/scade-pyhg/issues>`_
+Use the `Ansys SCADE THG for Python Issues <https://github.com/ansys/scade-pyhg/issues>`_
 page to submit questions, report bugs, and request new features. When possible, use
 these templates:
 

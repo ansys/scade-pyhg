@@ -20,22 +20,44 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""SCADE Test Harness Generator for Python."""
+"""Unit tests for values.py."""
 
-import importlib.metadata as importlib_metadata
-from pathlib import Path
+import pytest
 
-try:
-    __version__ = importlib_metadata.version(__name__.replace('.', '-'))
-except (importlib_metadata.PackageNotFoundError, AttributeError):
-    # Handle the case where version cannot be determined
-    __version__ = '0.0.0'
+from ansys.scade.pyhg.values import flatten
 
 
-TARGET = 'PYHG2'
-
-
-def srg() -> str:
-    """Path of the SCADE Studio registry file."""
-    # the package's srg file is located in the same directory
-    return str(Path(__file__).parent / 'pyhg.srg')
+@pytest.mark.parametrize(
+    'value, expected',
+    [
+        # scalar values
+        ('7_ui8', [('', '7')]),
+        ('3.14', [('', '3.14')]),
+        ('+5_f32', [('', '+5')]),
+        ("'x'", [('', "'x'")]),
+        ('t', [('', 'True')]),
+        ('true', [('', 'True')]),
+        ('f', [('', 'False')]),
+        ('false', [('', 'False')]),
+        # vector
+        (['9', '31_i32'], [('[0]', '9'), ('[1]', '31')]),
+        # structure
+        ({'r': '1.2_f64', 'i': '4.6'}, [('.r', '1.2'), ('.i', '4.6')]),
+        # combination within a string
+        (
+            "(7_ui8, 3.14, +5_f32, {r : (t, f, true), i : 'x'})",
+            [
+                ('[0]', '7'),
+                ('[1]', '3.14'),
+                ('[2]', '+5'),
+                ('[3].r[0]', 'True'),
+                ('[3].r[1]', 'False'),
+                ('[3].r[2]', 'True'),
+                ('[3].i', "'x'"),
+            ],
+        ),
+    ],
+)
+def test_flatten_nominal(value: str | list | dict, expected: list[tuple[str, str]]):
+    literals = flatten(value)
+    assert literals == expected

@@ -27,7 +27,6 @@ import re
 
 from pyparsing import (
     Forward,
-    ParseException,
     Regex,
     Suppress,
     Word,
@@ -64,9 +63,7 @@ class ListValues:
 
 
 class StructFields:
-    def __init__(self, fields=None) -> None:
-        if fields is None:
-            fields = []
+    def __init__(self, fields) -> None:
         self.fields = {name: value for name, value in fields}
 
     def flatten(self, suffix, literals):
@@ -106,15 +103,3 @@ def flatten(literal: object):
     tree.flatten('', literals)
 
     return literals
-
-
-if __name__ == '__main__':
-    try:
-        v = "(7_ui8, 3.14, +5_f32, {r : (t, f, true), i : 'x'})"
-        v = ['7_ui8', '3.14', '+5_f32', {'r': '(t, f, true)', 'i': "'x'"}]
-        literals = flatten(v)
-        for suffix, value in literals:
-            print('%s %s' % (suffix, value))
-    except ParseException:
-        print('parse error:')
-    pass

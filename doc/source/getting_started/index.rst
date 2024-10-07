@@ -1,6 +1,6 @@
 Getting started
 ===============
-To use {{Title}}, you must have a valid license for Ansys SCADE.
+To use Ansys SCADE THG for Python, you must have a valid license for Ansys SCADE.
 
 For information on getting a licensed copy, see the
 `Ansys SCADE Suite <https://www.ansys.com/products/embedded-software/ansys-scade-suite>`_
@@ -15,27 +15,22 @@ Ansys SCADE, starting from 2025 R1:
 
 Install in user mode
 --------------------
-The following steps are for installing {{Title}} in user mode. If you want to
-contribute to {{Title}}, see :ref:`contribute_scade_pyhg` for the steps
+The following steps are for installing Ansys SCADE THG for Python in user mode. If you want to
+contribute to Ansys SCADE THG for Python, see :ref:`contribute_scade_pyhg` for the steps
 for installing in developer mode.
 
-#. Before installing {{Title}} in user mode, run this command to ensure that
+#. Before installing Ansys SCADE THG for Python in user mode, run this command to ensure that
    you have the latest version of `pip`_:
 
    .. code:: bash
 
       python -m pip install -U pip
 
-#. Install {{Title}} with this command:
+#. Install Ansys SCADE THG for Python with this command:
 
    .. code:: bash
 
-       python -m pip install ansys-scade-pyhg
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Contents:
+       python -m pip install --user ansys-scade-pyhg
 
 .. LINKS AND REFERENCES
 .. _pip: https://pypi.org/project/pip/

@@ -22,29 +22,32 @@
 
 """SCADE Test Harness Generator for Python."""
 
+from io import TextIOBase
 from keyword import iskeyword
-import os
 from pathlib import Path
-from shutil import copy
+from typing import Optional, Union
 
 from scade.code.suite.mapping import c, model as m
 from scade.model.project.stdproject import Configuration, Project
 from scade.model.testenv import Procedure, Record
-import thg
 
 from ansys.scade.pyhg import __version__
+import ansys.scade.pyhg.proxy_thg as thg
 from ansys.scade.pyhg.values import flatten
 
 # ---------------------------------------------------------------------------
 # Generator
 # ---------------------------------------------------------------------------
 
+banner = 'PyHG ' + __version__
+
 
 class PyHG:
     def __init__(self, *args, **kwargs):
         # names
-        self.module = None
-        self.class_ = None
+        self.module = ''
+        self.runtime = 'ansys.scade.pyhg.lib.thgrt.Thgrt'
+        self.class_ = ''
         self.procedure = None
         # path -> name
         self.inputs = {}
@@ -54,7 +57,7 @@ class PyHG:
         # alias -> path
         self.aliases = {}
         # output file descriptor
-        self.f = None
+        self.f: Union[None, TextIOBase] = None
         # flatten names for a single check
         self.flatten_checks = {}
         # tolerances
@@ -66,27 +69,25 @@ class PyHG:
         project: Project,
         configuration: Configuration,
         procedure: Procedure,
-        kcg_target_dir: str,
-        target_dir: str,
-        add_args: str,
+        kcg_target_dir: Path,
+        target_dir: Path,
+        *args: str,
     ):
-        # module name
-        add_args_list = add_args.split() if add_args else []
-        if len(add_args_list) > 1:
-            assert add_args_list[0] == '-module_name'
-            self.module = add_args_list[1]
-        else:
+        # options
+        for arg in args:
+            param, value = arg.split(maxsplit=1)
+            if param == '-module_name':
+                self.module = value
+            elif param == '-runtime_class':
+                self.runtime = value
+
+        if not self.module:
             self.module = Path(project.pathname).stem.lower()
 
         self.procedure = procedure
-        # template for target file
-        target_file = Path(target_dir) / 'fake.ext'
         # remove the status file, is exists
-        status_file = target_file.with_name('thg_files.txt').as_posix()
-        try:
-            os.unlink(status_file)
-        except BaseException:
-            pass
+        status_file = target_dir / 'thg_files.txt'
+        status_file.unlink(missing_ok=True)
         # list of generated files
         generated_files = []
 
@@ -94,24 +95,17 @@ class PyHG:
         mapping = c.open_mapping((Path(kcg_target_dir) / 'mapping.xml').as_posix())
 
         # search the mapping data for the procedure's operator
-        operator_path = procedure.operator
-        if operator_path[-1] != '/':
-            operator_path += '/'
-        operators = [
-            op for op in mapping.get_all_operators() if op.get_scade_path() == operator_path
-        ]
-        if len(operators) != 1:
-            print(operator_path + ': Operator not found within the following ones:')
-            print('\t' + '\n\t'.join([op.get_scade_path() for op in mapping.get_all_operators()]))
+        operator = self.get_operator(mapping, procedure.operator)
+        if not operator:
             return
-        operator = operators[0]
         # class for the operator
         name = operator.get_name()
         self.class_ = name[0].upper() + name[1:]
         # init the io dictionary
         self.init_ios(mapping, operator)
 
-        # process the records: dump the semantic actions from the callbacks (on_xxx functions above)
+        # process the records: dump the semantic actions from the callbacks
+        # (above on_xxx functions)
         for record in gen_procedure_records(procedure):
             print(
                 '=== record {0} for {1}/{2}'.format(
@@ -121,9 +115,7 @@ class PyHG:
                 )
             )
             # assume one generated file per record
-            target_scenario = target_file.with_name(
-                ('%s_%s.py' % (procedure.name, record.name)).lower()
-            )
+            target_scenario = target_dir / ('%s_%s.py' % (procedure.name, record.name)).lower()
             with target_scenario.open('w') as self.f:
                 self.start_scenario()
                 for scenario, is_init in gen_record_scenarios(record):
@@ -136,11 +128,8 @@ class PyHG:
                 self.close_scenario()
             generated_files.append(target_scenario.name)
 
-        # copy the thgrt lib module
-        self.thgrt_file_src = Path(__file__).parent.parent / 'lib' / 'thgrt.py'
-        copy(self.thgrt_file_src, Path(target_dir))
         # generate the status file
-        with open(status_file, 'w', newline='\n') as fd:
+        with status_file.open('w', newline='\n') as fd:
             print('\n'.join(generated_files), file=fd)
 
     def on_cycle(self, line: int, col: int, number: str):
@@ -183,13 +172,13 @@ class PyHG:
         # register the check
         args = ''
         if sustain == 'forever':
-            sustain = -1
+            n_sustain = -1
         elif not sustain:
-            sustain = 1
+            n_sustain = 1
         else:
-            sustain = int(sustain)
-        if sustain != 1:
-            args += f', sustain={sustain}'
+            n_sustain = int(sustain)
+        if n_sustain != 1:
+            args += f', sustain={n_sustain}'
         if not real_tol:
             real_tol = self.tolerances.get(dip, self.tolerances.get(''))
         if real_tol:
@@ -239,11 +228,16 @@ class PyHG:
         print('error: {0} {1} {2}'.format(line, col, msg))
         pass
 
+    # utils
+
     def start_scenario(self):
+        assert self.procedure
         self.writeln('# generated by %s' % banner)
         self.writeln('')
         self.writeln('from %s import %s' % (self.module, self.class_))
-        self.writeln('from thgrt import Thgrt')
+        # runtime provided as module.class
+        path = self.runtime.split('.')
+        self.writeln('from %s import %s as Thgrt' % ('.'.join(path[:-1]), path[-1]))
         self.writeln('')
         self.writeln('# instance of root operator')
         self.writeln('root = %s()' % (self.class_))
@@ -259,26 +253,36 @@ class PyHG:
         self.writeln('# end of file')
 
     def writeln(self, text: str):
+        assert self.f
         self.f.write(text)
         self.f.write('\n')
 
+    def get_operator(self, mf: c.MappingFile, operator_path: str) -> Optional[m.Operator]:
+        # search the mapping data for the procedure's operator
+        if operator_path[-1] != '/':
+            operator_path += '/'
+        operator = next(
+            (op for op in mf.get_all_operators() if op.get_scade_path() == operator_path), None
+        )
+        if not operator:
+            print(operator_path + ': Operator not found within the following ones:')
+            print('\t' + '\n\t'.join([op.get_scade_path() for op in mf.get_all_operators()]))
+            return None
+        return operator
+
     def is_input(self, io: str) -> bool:
-        return True if io in self.inputs or io in self.sensors else False
+        return io in self.inputs or io in self.sensors
 
     def is_output(self, io: str) -> bool:
-        return True if io in self.outputs or io in self.probes else False
+        return io in self.outputs or io in self.probes
 
     def init_ios(self, mapping, operator: m.Operator):
         # gather all the names in a dictionary
-        for io in operator.get_inputs():
-            self.inputs[io.get_scade_path()] = io.get_name()
-        for io in operator.get_outputs():
-            self.outputs[io.get_scade_path()] = io.get_name()
+        self.inputs = {io.get_scade_path(): io.get_name() for io in operator.get_inputs()}
+        self.outputs = {io.get_scade_path(): io.get_name() for io in operator.get_outputs()}
         # TODO: retrieve sensors and probes from the mapping
         self.sensors = {}
         self.probes = {}
-        # print(self.inputs)
-        # print(self.outputs)
 
     def resolve_io(self, name: str) -> str:
         io = self.aliases.get(name, name)
@@ -328,21 +332,6 @@ def gen_record_scenarios(record):
 
 
 # ---------------------------------------------------------------------------
-# naming
-# ---------------------------------------------------------------------------
-
-
-def get_model_module_name(project: Project):
-    # name of the proxy Python file
-    return Path(project.pathname).stem.lower()
-
-
-def get_class_name(operator: m.Operator):
-    # name of the operator, without package prefix
-    return operator.get_name()
-
-
-# ---------------------------------------------------------------------------
 # interface
 # ---------------------------------------------------------------------------
 
@@ -354,52 +343,39 @@ def thg_main(
     procedure: Procedure,
     kcg_target_dir: str,
     target_dir: str,
-    *args,
+    *args: str,
 ):
-    str_args = '[%s]' % ', '.join(args)
-    print(
-        'main: {0} {1} {2} {3} {4} {5} {6}'.format(
-            target,
-            project.pathname,
-            configuration.name,
-            procedure.name,
-            kcg_target_dir,
-            target_dir,
-            str_args,
-        )
+    # display some banner
+    print(banner)
+
+    PyHG().main(
+        target, project, configuration, procedure, Path(kcg_target_dir), Path(target_dir), *args
     )
-    print('-----------------------------')
 
-    PyHG().main(target, project, configuration, procedure, kcg_target_dir, target_dir, *args)
-
-
-# display some banner
-banner = 'PyHG ' + __version__
-# print(banner)
 
 # ---------------------------------------------------------------------------
 # raw callbacks for THG
 # ---------------------------------------------------------------------------
 
 
-def on_cycle(client_data: object, line: int, col: int, number: str):
+def on_cycle(client_data: PyHG, line: int, col: int, number: str):
     client_data.on_cycle(line, col, number)
 
 
-def on_comment(client_data: object, line: int, col: int, text: str):
+def on_comment(client_data: PyHG, line: int, col: int, text: str):
     client_data.on_comment(line, col, text)
 
 
-def on_set_tol(client_data: object, line: int, col: int, dip: str, int_tol: str, real_tol: str):
+def on_set_tol(client_data: PyHG, line: int, col: int, dip: str, int_tol: str, real_tol: str):
     client_data.on_set_tol(line, col, dip, int_tol, real_tol)
 
 
-def on_set(client_data: object, line: int, col: int, dip: str, value: object):
+def on_set(client_data: PyHG, line: int, col: int, dip: str, value: object):
     client_data.on_set(line, col, dip, value)
 
 
 def on_check(
-    client_data: object,
+    client_data: PyHG,
     line: int,
     col: int,
     dip: str,
@@ -412,25 +388,25 @@ def on_check(
     client_data.on_check(line, col, dip, value, sustain, int_tol, real_tol, filter)
 
 
-def on_uncheck(client_data: object, line: int, col: int, dip: str):
+def on_uncheck(client_data: PyHG, line: int, col: int, dip: str):
     client_data.on_uncheck(line, col, dip)
 
 
-def on_set_or_check(client_data: object, line: int, col: int, dip: str, value: object):
+def on_set_or_check(client_data: PyHG, line: int, col: int, dip: str, value: object):
     client_data.on_set_or_check(line, col, dip, value)
 
 
-def on_alias(client_data: object, line: int, col: int, alias: str, dip: str):
+def on_alias(client_data: PyHG, line: int, col: int, alias: str, dip: str):
     client_data.on_alias(line, col, alias, dip)
 
 
-def on_alias_value(client_data: object, line: int, col: int, alias: str, value: object):
+def on_alias_value(client_data: PyHG, line: int, col: int, alias: str, value: object):
     client_data.on_alias_value(line, col, alias, value)
 
 
-def on_notify(client_data: object, line: int, col: int, msg: str):
+def on_notify(client_data: PyHG, line: int, col: int, msg: str):
     client_data.on_notify(line, col, msg)
 
 
-def on_error(client_data: object, line: int, col: int, msg: str):
+def on_error(client_data: PyHG, line: int, col: int, msg: str):
     client_data.on_error(line, col, msg)

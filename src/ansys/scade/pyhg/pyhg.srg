@@ -1,14 +1,19 @@
-[Scade/TestTool/Targets/PyHG]
-"Name"="PYHG"
-"DisplayName"="Python Target Test Environment"
-"Server1"="PyHGSettings"
+[Scade/TestTool/Targets/PYHG]
+"Expire"="25100"
 
 [Studio/Work Interfaces/PyHGSettings]
+"Expire"="25100"
+
+[Scade/TestTool/Targets/PYHG2]
+"Version"="25100"
+"Name"="PYHG2"
+"DisplayName"="Python Target Test Environment"
+"Server1"="PyHG2Settings"
+
+[Studio/Work Interfaces/PyHG2Settings]
+"Version"="25100"
 "Pathname"="ETCUST.DLL"
 "Products"="SC"
 
-[Custom/Studio/Extensions/PyHGSettings]
-"Pathname"="%TARGETDIR%pyhg/scripts/pyhgsettings.tcl"
-
-[PyHG]
-"Pathname"="%TARGETDIR%pyhg/scripts/pyhg.py"
+[Custom/Studio/Extensions/PyHG2Settings]
+"Package"="ansys.scade.pyhg.settings"

@@ -32,18 +32,22 @@ import scade.model.project.stdproject as std
 import scade.model.testenv as qte
 
 import ansys.scade.pyhg.pyhg as pyhg
-from conftest import load_project, load_test_application
+from conftest import find_configuration, load_project
 
 
 @pytest.fixture(scope='session')
-def first_models() -> tuple[std.Project, qte.TestApplication, c.MappingFile]:
+def first_p1() -> tuple[std.Project, qte.Procedure, c.MappingFile]:
     """Load the project."""
-    path = Path(__file__).parent / 'First' / 'Test' / 'Test.etp'
+    first_dir = Path(__file__).parent / 'First'
+    path = first_dir / 'Model' / 'First.etp'
     project = load_project(path)
-    application = load_test_application(project)
-    kcg_target_dir = Path(__file__).parent / 'First' / 'Model' / 'KCG'
-    mf = c.open_mapping((kcg_target_dir / 'mapping.xml').as_posix())
-    return project, application, mf
+    path = first_dir / 'Test' / 'P1.stp'
+    application = qte.TestApplication()
+    application.load_procedure_tcl(str(path))
+    procedure = application.procedures[0]
+    kcg_target_dir = first_dir / 'Model' / 'KCG'
+    mf = c.open_mapping(str(kcg_target_dir / 'mapping.xml'))
+    return project, procedure, mf
 
 
 class TestPyHG(pyhg.PyHG):
@@ -99,8 +103,8 @@ def test_on_comment(text: str, expected: str):
     'name, value, expected',
     [('a', '31', 'root.a = 31'), ('P::Main/a1', '(12, 46)', 'root.a1[0] = 12\nroot.a1[1] = 46')],
 )
-def test_on_set(first_models, name: str, value: str, expected: str):
-    _, _, mf = first_models
+def test_on_set(first_p1, name: str, value: str, expected: str):
+    _, _, mf = first_p1
     cls = TestPyHG(mf, 'P::Main')
     # fixed alias for a
     cls.on_alias(0, 0, 'a', 'P::Main/a')
@@ -121,8 +125,8 @@ def test_on_set(first_models, name: str, value: str, expected: str):
         (('P::Main/v2', 'true', '31', '', ''), 'thgrt.check("v2", True, sustain=31)'),
     ],
 )
-def test_on_check(first_models, options: tuple[str, str, str, str, str], expected: str):
-    _, _, mf = first_models
+def test_on_check(first_p1, options: tuple[str, str, str, str, str], expected: str):
+    _, _, mf = first_p1
     cls = TestPyHG(mf, 'P::Main')
     # fixed alias for v1
     pyhg.on_alias(cls, 2, 3, 'v1', 'P::Main/v1')
@@ -142,8 +146,8 @@ def test_on_check(first_models, options: tuple[str, str, str, str, str], expecte
         ('v1', '(8.1, 8.2)', 'thgrt.uncheck("v1[0]")\nthgrt.uncheck("v1[1]")'),
     ],
 )
-def test_on_uncheck(first_models, name: str, value: str, expected: str):
-    _, _, mf = first_models
+def test_on_uncheck(first_p1, name: str, value: str, expected: str):
+    _, _, mf = first_p1
     cls = TestPyHG(mf, 'P::Main')
     # fixed alias for v1
     pyhg.on_alias(cls, 2, 3, 'v1', 'P::Main/v1')
@@ -167,8 +171,8 @@ def test_on_uncheck(first_models, name: str, value: str, expected: str):
         ('P::Main/x', '99', ''),
     ],
 )
-def test_on_set_or_check(first_models, name: str, value: str, expected: str, capsys):
-    _, _, mf = first_models
+def test_on_set_or_check(first_p1, name: str, value: str, expected: str, capsys):
+    _, _, mf = first_p1
     cls = TestPyHG(mf, 'P::Main')
     # fixed alias for v1
     text = cls.read()
@@ -189,3 +193,22 @@ def test_on_set_or_check(first_models, name: str, value: str, expected: str, cap
 
 # on_set_tol tested together with on_set and on_check
 # def test_on_alias(...):
+
+
+def test_main(first_p1, tmpdir):
+    # basic test for PyHG.main: since th ecalls to thg are stubbed,
+    # the test only verify the call creates the expected files and returns.
+    project, procedure, _ = first_p1
+    expected = tmpdir / 'p1_nominal.py'
+    assert not expected.exists()
+    pyhg.thg_main(
+        'PYHG2',
+        project,
+        find_configuration(project, 'KCG'),  # unused
+        procedure,
+        str(Path(__file__).parent / 'First' / 'Model' / 'KCG'),
+        str(tmpdir),
+        '-module_name first',
+        '-runtime_class my_module.MyRuntime',
+    )
+    assert expected.exists()

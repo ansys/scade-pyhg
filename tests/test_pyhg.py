@@ -32,49 +32,42 @@ import scade.model.project.stdproject as std
 import scade.model.testenv as qte
 
 import ansys.scade.pyhg.pyhg as pyhg
-from conftest import load_project, load_test_application
+from conftest import load_project
 
 
 @pytest.fixture(scope='session')
-def first_models() -> tuple[std.Project, qte.TestApplication, c.MappingFile]:
+def first_p1() -> tuple[std.Project, qte.Procedure, c.MappingFile]:
     """Load the project."""
-    path = Path(__file__).parent / 'First' / 'Test' / 'Test.etp'
+    first_dir = Path(__file__).parent / 'First'
+    path = first_dir / 'Model' / 'First.etp'
     project = load_project(path)
-    application = load_test_application(project)
-    kcg_target_dir = Path(__file__).parent / 'First' / 'Model' / 'KCG'
-    mf = c.open_mapping((kcg_target_dir / 'mapping.xml').as_posix())
-    return project, application, mf
+    path = first_dir / 'Test' / 'P1.stp'
+    application = qte.TestApplication()
+    application.load_procedure_tcl(str(path))
+    procedure = application.procedures[0]
+    kcg_target_dir = first_dir / 'Model' / 'KCG'
+    mf = c.open_mapping(str(kcg_target_dir / 'mapping.xml'))
+    return project, procedure, mf
 
 
 @pytest.mark.parametrize(
     'name, expected',
     [('P1', {'Nominal'})],
 )
-def test_gen_procedure_records(first_models, name, expected):
-    _, application, _ = first_models
-    for procedure in application.procedures:
-        if procedure.name == name:
-            break
-    else:
-        assert False
+def test_gen_procedure_records(first_p1, name, expected):
+    _, procedure, _ = first_p1
     records = {_.name for _ in pyhg.gen_procedure_records(procedure)}
     assert records == expected
 
 
 @pytest.mark.parametrize(
-    'path, expected',
-    [('P1.Nominal', {'MainInit.sss', 'Preamble.sss', 'MainNominal.sss'})],
+    'name, expected',
+    [('Nominal', {'MainInit.sss', 'Preamble.sss', 'MainNominal.sss'})],
 )
-def test_gen_record_scenarios(first_models, path, expected):
-    _, application, _ = first_models
-    procedure_name, record_name = path.split('.')
-    for procedure in application.procedures:
-        if procedure.name == procedure_name:
-            break
-    else:
-        assert False
+def test_gen_record_scenarios(first_p1, name, expected):
+    _, procedure, _ = first_p1
     for record in procedure.records:
-        if record.name == record_name:
+        if record.name == name:
             break
     else:
         assert False
@@ -86,7 +79,7 @@ def test_gen_record_scenarios(first_models, path, expected):
     'name, expected',
     [('state', 'state'), ('class', 'class_')],
 )
-def test_filter_keyword(first_models, name: str, expected: str):
+def test_filter_keyword(name: str, expected: str):
     cls = pyhg.PyHG()
     new_name = cls.filter_keyword(name)
     assert new_name == expected
@@ -96,8 +89,8 @@ def test_filter_keyword(first_models, name: str, expected: str):
     'path, expected',
     [('P::Main', 'Main_P'), ('P::Main/', 'Main_P'), ('Q::Main', '')],
 )
-def test_get_operator(first_models, path, expected, capsys):
-    _, _, mf = first_models
+def test_get_operator(first_p1, path, expected, capsys):
+    _, _, mf = first_p1
     cls = pyhg.PyHG()
     # clean the output
     capsys.readouterr()
@@ -115,9 +108,9 @@ def test_get_operator(first_models, path, expected, capsys):
     # TODO: add at least sensors
     [('P::Main/a', 'I', 'a'), ('P::Main/v', 'O', 'v')],
 )
-def test_ios(first_models, io_path: str, kind: str, expected: str):
+def test_ios(first_p1, io_path: str, kind: str, expected: str):
     # kind: I (input) | O (output) | S (sensor) | P (probe)
-    _, _, mf = first_models
+    _, _, mf = first_p1
     cls = pyhg.PyHG()
     operator = cls.get_operator(mf, 'P::Main/')
     assert operator

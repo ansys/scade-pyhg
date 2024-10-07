@@ -61,9 +61,9 @@ def parse() -> bool:
     Returns
     -------
     bool
-        Whether the end of the parsed scenario is reached.
+        False when the end of the parsed scenario is reached, True otherwise.
     """
-    return _thg.parse() if _thg else True
+    return _thg.parse() if _thg else False
 
 
 def close():

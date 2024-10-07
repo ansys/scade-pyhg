@@ -31,16 +31,6 @@ import ansys.scade.apitools  # noqa: F401
 # isort: split
 import scade
 import scade.model.project.stdproject as std
-import scade.model.testenv as qte
-
-
-def load_test_application(project: std.Project) -> qte.TestApplication:
-    """Create an instance of TestApplication instance and its procedures."""
-    application = qte.TestApplication()
-    for file in project.file_refs:
-        if Path(file.pathname).suffix.lower() == '.stp':
-            application.load_procedure_tcl(file.pathname)
-    return application
 
 
 def load_project(path: Path) -> std.Project:
@@ -57,11 +47,4 @@ def find_configuration(project: std.Project, name: str) -> std.Configuration:
     for configuration in project.configurations:
         if configuration.name == name:
             return configuration
-    assert False
-
-
-def find_procedure(application: qte.TestApplication, name: str) -> qte.Procedure:
-    for procedure in application.procedures:
-        if procedure.name == name:
-            return procedure
     assert False

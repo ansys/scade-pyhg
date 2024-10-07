@@ -20,14 +20,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""Main for debugging the extension."""
+"""Main for debugging the custom target."""
 
 # product search paths
 # C:\Program Files\ANSYS Inc\v251\SCADE\SCADE\APIs\Python\lib
 # C:\Program Files\ANSYS Inc\v251\SCADE\SCADE\bin
-# debug search paths
-# O:\SCADE\APIs\Python\lib
-# O:\Suite\x64 - Release
 
 import argparse
 import os
@@ -41,7 +38,7 @@ from ansys.scade.apitools.info import get_scade_home
 
 from scade.code.suite.sctoc import raw_tcl
 
-parser = argparse.ArgumentParser(description='Python way for scade -code')
+parser = argparse.ArgumentParser(description='Python way for scade -test -thg')
 parser.add_argument('-p', '--project', metavar='<Scade project>', help='SCADE Suite', required=True)
 parser.add_argument(
     '-c', '--configuration', metavar='<configuration>', help='configuration', required=True

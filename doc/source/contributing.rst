@@ -71,8 +71,8 @@ source and enhance it.
       tox
 
 
-Test
-----
+Unit test
+---------
 Ansys SCADE THG for Python uses `tox`_ for testing. This tool allows you to
 automate common development tasks (similar to ``Makefile``), but it is oriented
 towards Python development.
@@ -147,6 +147,59 @@ However, the recommended way of checking documentation integrity is to use
 .. code:: bash
 
     tox -e doc-html && your_browser_name .tox/doc_out/index.html
+
+Debug and integration test
+--------------------------
+Ansys SCADE Test Harness Generator needs to be registered to SCADE for
+integration testing. Indeed, it is called by SCADE Test Harness Generation.
+
+Install in user mode
+^^^^^^^^^^^^^^^^^^^^
+It is not possible to reuse the virtual environment setup for the repository.
+You must install the package in an environment accessible by SCADE, for
+example its own Python distribution, although this is not advised,
+or the Python 3.10 *user* distribution:
+
+.. code:: bash
+
+   <python310.exe> -m pip install --user --editable .
+
+You can reuse any ``<install>\SCADE\contrib\Python310\python.exe``
+or Python 3.10 installation on your computer.
+
+Debug
+^^^^^
+The ``.\tests\Debug\debug.py`` script uses internal SCADE Test Harness Generation
+entry points to start a debug session for the scripts.
+
+You must use the Python 3.10 environment delivered with SCADE, located in
+``<install>\contrib\Python310``.
+
+For example:
+``C:\Program Files\ANSYS Inc\v251\SCADE\contrib\Python310``.
+
+Configure PYTHONPATH to refer to ``<install>\SCADE\bin`` and
+``<install>\SCADE\APIs\Python\lib``. For example:
+
+.. code:: bash
+
+   set PYTHONPATH=C:\Program Files\ANSYS Inc\v251\SCADE\SCADE\bin;C:\Program Files\ANSYS Inc\v251\SCADE\SCADE\APIs\Python\lib
+
+Refer to ``.\tests\Debug\debug.py`` for its command line parameters.
+
+Run the integration tests
+^^^^^^^^^^^^^^^^^^^^^^^^^
+These are manual tests. Refer to the test procedures, contained in each test
+directory as readme files.
+
+Uninstall
+^^^^^^^^^
+Once the test or debug sessions are completed, you may uninstall the package
+as follows:
+
+.. code:: bash
+
+   <python310.exe> -m pip uninstall ansys-scade-pyhg
 
 Distribute
 ----------

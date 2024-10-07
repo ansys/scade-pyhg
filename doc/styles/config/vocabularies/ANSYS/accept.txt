@@ -8,3 +8,5 @@ SCADE
 isort
 pytest
 pyhg
+readme
+chapter

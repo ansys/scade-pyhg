@@ -32,7 +32,5 @@ for installing in developer mode.
 
        python -m pip install --user ansys-scade-pyhg
 
-
-
 .. LINKS AND REFERENCES
 .. _pip: https://pypi.org/project/pip/

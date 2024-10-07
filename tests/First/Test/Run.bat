@@ -1,4 +1,4 @@
 @echo off
 set PYTHONPATH=..\Model\Python
-python Thg\p1_nominal.py
+%LOCALAPPDATA%\Programs\Python\Python310\python.exe Thg\p1_nominal.py
 pause

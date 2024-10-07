@@ -19,7 +19,7 @@ maintainers = [
 ]
 dependencies=[
     "importlib-metadata >= 4.0; python_version >= '3.8'",
-    # "ansys-scade-apitools",
+    "ansys-scade-apitools",
     "pyparsing",
 ]
 classifiers=[

@@ -38,154 +38,174 @@
     <option name="auth" value="#off#"/>
   </config>
   <model>
-    <predefType id="1" name="bool"/>
-    <predefType id="2" name="char"/>
-    <predefType id="3" name="int8"/>
-    <predefType id="4" name="int16"/>
-    <predefType id="5" name="int32"/>
-    <predefType id="6" name="int64"/>
-    <predefType id="7" name="uint8"/>
-    <predefType id="8" name="uint16"/>
-    <predefType id="9" name="uint32"/>
-    <predefType id="10" name="uint64"/>
-    <predefType id="11" name="float32"/>
-    <predefType id="12" name="float64"/>
-    <predefType id="13" name="size"/>
-    <package id="14" name="P">
-      <operator id="15" name="Main" imported="false" root="true" expanded="false">
-        <input id="16" name="a" clock="false" type="5"/>
-        <input id="17" name="b" clock="false" type="5"/>
-        <input id="18" name="a1" clock="false" type="11"/>
-        <input id="19" name="b1" clock="false" type="11"/>
-        <input id="20" name="a2" clock="false" type="1"/>
-        <input id="21" name="b2" clock="false" type="1"/>
-        <output id="22" name="v" clock="false" type="5"/>
-        <output id="23" name="v1" clock="false" type="11"/>
-        <output id="24" name="v2" clock="false" type="1"/>
+    <array id="1" baseType="13" size="2"/>
+    <predefType id="2" name="bool"/>
+    <predefType id="3" name="char"/>
+    <predefType id="4" name="int8"/>
+    <predefType id="5" name="int16"/>
+    <predefType id="6" name="int32"/>
+    <predefType id="7" name="int64"/>
+    <predefType id="8" name="uint8"/>
+    <predefType id="9" name="uint16"/>
+    <predefType id="10" name="uint32"/>
+    <predefType id="11" name="uint64"/>
+    <predefType id="12" name="float32"/>
+    <predefType id="13" name="float64"/>
+    <predefType id="14" name="size"/>
+    <package id="15" name="P">
+      <sensor id="16" name="s" type="1"/>
+      <operator id="17" name="Main" imported="false" root="true" expanded="false">
+        <input id="18" name="a" clock="false" type="6"/>
+        <input id="19" name="b" clock="false" type="6"/>
+        <input id="20" name="a1" clock="false" type="12"/>
+        <input id="21" name="b1" clock="false" type="12"/>
+        <input id="22" name="a2" clock="false" type="2"/>
+        <input id="23" name="b2" clock="false" type="2"/>
+        <output id="24" name="v" clock="false" type="6"/>
+        <output id="25" name="v1" clock="false" type="12"/>
+        <output id="26" name="v2" clock="false" type="2"/>
+        <output id="27" name="v3" clock="false" type="13"/>
       </operator>
     </package>
   </model>
   <generated>
     <c>
-      <file id="25" name="Main_P.h">
-        <function id="26" name="Main_init_P">
-          <parameter id="27" name="outC" type="33" pointer="true"/>
+      <file id="28" name="Main_P.h">
+        <function id="29" name="Main_init_P">
+          <parameter id="30" name="outC" type="36" pointer="true"/>
         </function>
-        <function id="28" name="Main_reset_P">
-          <parameter id="29" name="outC" type="33" pointer="true"/>
+        <function id="31" name="Main_reset_P">
+          <parameter id="32" name="outC" type="36" pointer="true"/>
         </function>
-        <function id="30" name="Main_P">
-          <parameter id="31" name="inC" type="37" pointer="true"/>
-          <parameter id="32" name="outC" type="33" pointer="true"/>
+        <function id="33" name="Main_P">
+          <parameter id="34" name="inC" type="41" pointer="true"/>
+          <parameter id="35" name="outC" type="36" pointer="true"/>
         </function>
-        <struct id="33" name="outC_Main_P">
-          <field id="34" name="v" type="70" pointer="false"/>
-          <field id="35" name="v1" type="78" pointer="false"/>
-          <field id="36" name="v2" type="79" pointer="false"/>
+        <struct id="36" name="outC_Main_P">
+          <field id="37" name="v" type="80" pointer="false"/>
+          <field id="38" name="v1" type="88" pointer="false"/>
+          <field id="39" name="v2" type="89" pointer="false"/>
+          <field id="40" name="v3" type="87" pointer="false"/>
         </struct>
-        <struct id="37" name="inC_Main_P">
-          <field id="38" name="a" type="70" pointer="false"/>
-          <field id="39" name="b" type="70" pointer="false"/>
-          <field id="40" name="a1" type="78" pointer="false"/>
-          <field id="41" name="b1" type="78" pointer="false"/>
-          <field id="42" name="a2" type="79" pointer="false"/>
-          <field id="43" name="b2" type="79" pointer="false"/>
+        <struct id="41" name="inC_Main_P">
+          <field id="42" name="a" type="80" pointer="false"/>
+          <field id="43" name="b" type="80" pointer="false"/>
+          <field id="44" name="a1" type="88" pointer="false"/>
+          <field id="45" name="b1" type="88" pointer="false"/>
+          <field id="46" name="a2" type="89" pointer="false"/>
+          <field id="47" name="b2" type="89" pointer="false"/>
         </struct>
       </file>
-      <file id="44" name="kcg_types.h">
-        <macro id="45" name="kcg_assign_array"/>
-        <macro id="46" name="kcg_assign_struct"/>
-        <macro id="47" name="kcg_lnot_uint8"/>
-        <macro id="48" name="kcg_lnot_uint16"/>
-        <macro id="49" name="kcg_lnot_uint32"/>
-        <macro id="50" name="kcg_lnot_uint64"/>
-        <macro id="51" name="kcg_lsl_uint8"/>
-        <macro id="52" name="kcg_lsl_uint16"/>
-        <macro id="53" name="kcg_lsl_uint32"/>
-        <macro id="54" name="kcg_lsl_uint64"/>
-        <macro id="55" name="kcg_true"/>
-        <macro id="56" name="kcg_false"/>
-        <macro id="57" name="kcg_lit_int8"/>
-        <macro id="58" name="kcg_lit_int16"/>
-        <macro id="59" name="kcg_lit_int32"/>
-        <macro id="60" name="kcg_lit_int64"/>
-        <macro id="61" name="kcg_lit_uint8"/>
-        <macro id="62" name="kcg_lit_uint16"/>
-        <macro id="63" name="kcg_lit_uint32"/>
-        <macro id="64" name="kcg_lit_uint64"/>
-        <macro id="65" name="kcg_lit_size"/>
-        <macro id="66" name="kcg_lit_float64"/>
-        <macro id="67" name="kcg_lit_float32"/>
-        <predefType id="68" name="kcg_int8"/>
-        <predefType id="69" name="kcg_int16"/>
-        <predefType id="70" name="kcg_int32"/>
-        <predefType id="71" name="kcg_int64"/>
-        <predefType id="72" name="kcg_uint8"/>
-        <predefType id="73" name="kcg_uint16"/>
-        <predefType id="74" name="kcg_uint32"/>
-        <predefType id="75" name="kcg_uint64"/>
-        <predefType id="76" name="kcg_size"/>
-        <predefType id="77" name="kcg_float64"/>
-        <predefType id="78" name="kcg_float32"/>
-        <predefType id="79" name="kcg_bool"/>
-        <predefType id="80" name="kcg_char"/>
-        <macro id="81" name="KCG_MAPW_CPY"/>
+      <file id="48" name="kcg_types.h">
+        <ifdef id="49" name="kcg_use_array_float64_2">
+          <function id="50" name="kcg_comp_array_float64_2" returnType="89">
+            <parameter id="51" name="kcg_c1" type="54" pointer="true"/>
+            <parameter id="52" name="kcg_c2" type="54" pointer="true"/>
+          </function>
+        </ifdef>
+        <macro id="53" name="kcg_copy_array_float64_2"/>
+        <array id="54" name="array_float64_2" baseType="87" size="2"/>
+        <macro id="55" name="kcg_assign_array"/>
+        <macro id="56" name="kcg_assign_struct"/>
+        <macro id="57" name="kcg_lnot_uint8"/>
+        <macro id="58" name="kcg_lnot_uint16"/>
+        <macro id="59" name="kcg_lnot_uint32"/>
+        <macro id="60" name="kcg_lnot_uint64"/>
+        <macro id="61" name="kcg_lsl_uint8"/>
+        <macro id="62" name="kcg_lsl_uint16"/>
+        <macro id="63" name="kcg_lsl_uint32"/>
+        <macro id="64" name="kcg_lsl_uint64"/>
+        <macro id="65" name="kcg_true"/>
+        <macro id="66" name="kcg_false"/>
+        <macro id="67" name="kcg_lit_int8"/>
+        <macro id="68" name="kcg_lit_int16"/>
+        <macro id="69" name="kcg_lit_int32"/>
+        <macro id="70" name="kcg_lit_int64"/>
+        <macro id="71" name="kcg_lit_uint8"/>
+        <macro id="72" name="kcg_lit_uint16"/>
+        <macro id="73" name="kcg_lit_uint32"/>
+        <macro id="74" name="kcg_lit_uint64"/>
+        <macro id="75" name="kcg_lit_size"/>
+        <macro id="76" name="kcg_lit_float64"/>
+        <macro id="77" name="kcg_lit_float32"/>
+        <predefType id="78" name="kcg_int8"/>
+        <predefType id="79" name="kcg_int16"/>
+        <predefType id="80" name="kcg_int32"/>
+        <predefType id="81" name="kcg_int64"/>
+        <predefType id="82" name="kcg_uint8"/>
+        <predefType id="83" name="kcg_uint16"/>
+        <predefType id="84" name="kcg_uint32"/>
+        <predefType id="85" name="kcg_uint64"/>
+        <predefType id="86" name="kcg_size"/>
+        <predefType id="87" name="kcg_float64"/>
+        <predefType id="88" name="kcg_float32"/>
+        <predefType id="89" name="kcg_bool"/>
+        <predefType id="90" name="kcg_char"/>
+        <macro id="91" name="KCG_MAPW_CPY"/>
       </file>
-      <file id="82" name="kcg_consts.h"/>
-      <file id="83" name="kcg_sensors.h"/>
+      <file id="92" name="kcg_consts.h"/>
+      <file id="93" name="kcg_sensors.h">
+        <global id="94" name="s_P" type="54" pointer="false"/>
+      </file>
     </c>
-    <map srcId="77" dstId="66" role="wrapped-lit"/>
+    <map srcId="87" dstId="76" role="wrapped-lit"/>
+    <map srcId="88" dstId="77" role="wrapped-lit"/>
+    <map srcId="86" dstId="75" role="wrapped-lit"/>
+    <map srcId="85" dstId="74" role="wrapped-lit"/>
+    <map srcId="85" dstId="60" role="wrapped-lnot"/>
+    <map srcId="85" dstId="64" role="wrapped-lsl"/>
+    <map srcId="84" dstId="73" role="wrapped-lit"/>
+    <map srcId="84" dstId="59" role="wrapped-lnot"/>
+    <map srcId="84" dstId="63" role="wrapped-lsl"/>
+    <map srcId="83" dstId="72" role="wrapped-lit"/>
+    <map srcId="83" dstId="58" role="wrapped-lnot"/>
+    <map srcId="83" dstId="62" role="wrapped-lsl"/>
+    <map srcId="82" dstId="71" role="wrapped-lit"/>
+    <map srcId="82" dstId="57" role="wrapped-lnot"/>
+    <map srcId="82" dstId="61" role="wrapped-lsl"/>
+    <map srcId="81" dstId="70" role="wrapped-lit"/>
+    <map srcId="80" dstId="69" role="wrapped-lit"/>
+    <map srcId="79" dstId="68" role="wrapped-lit"/>
     <map srcId="78" dstId="67" role="wrapped-lit"/>
-    <map srcId="76" dstId="65" role="wrapped-lit"/>
-    <map srcId="75" dstId="64" role="wrapped-lit"/>
-    <map srcId="75" dstId="50" role="wrapped-lnot"/>
-    <map srcId="75" dstId="54" role="wrapped-lsl"/>
-    <map srcId="74" dstId="63" role="wrapped-lit"/>
-    <map srcId="74" dstId="49" role="wrapped-lnot"/>
-    <map srcId="74" dstId="53" role="wrapped-lsl"/>
-    <map srcId="73" dstId="62" role="wrapped-lit"/>
-    <map srcId="73" dstId="48" role="wrapped-lnot"/>
-    <map srcId="73" dstId="52" role="wrapped-lsl"/>
-    <map srcId="72" dstId="61" role="wrapped-lit"/>
-    <map srcId="72" dstId="47" role="wrapped-lnot"/>
-    <map srcId="72" dstId="51" role="wrapped-lsl"/>
-    <map srcId="71" dstId="60" role="wrapped-lit"/>
-    <map srcId="70" dstId="59" role="wrapped-lit"/>
-    <map srcId="69" dstId="58" role="wrapped-lit"/>
-    <map srcId="68" dstId="57" role="wrapped-lit"/>
+    <map srcId="54" dstId="49" role="type-use"/>
+    <map srcId="54" dstId="50" role="type-comparison"/>
+    <map srcId="54" dstId="53" role="type-copy"/>
   </generated>
-  <map modelId="15" generatedId="27" role="context-parameter"/>
-  <map modelId="15" generatedId="26" role="init-method"/>
-  <map modelId="15" generatedId="29" role="context-parameter"/>
-  <map modelId="15" generatedId="28" role="reset-method"/>
-  <map modelId="15" generatedId="31" role="input-struct-parameter"/>
-  <map modelId="21" generatedId="43"/>
-  <map modelId="20" generatedId="42"/>
-  <map modelId="19" generatedId="41"/>
-  <map modelId="18" generatedId="40"/>
-  <map modelId="17" generatedId="39"/>
-  <map modelId="16" generatedId="38"/>
-  <map modelId="15" generatedId="37" role="input-struct-type"/>
-  <map modelId="15" generatedId="32" role="context-parameter"/>
-  <map modelId="24" generatedId="36"/>
-  <map modelId="23" generatedId="35"/>
-  <map modelId="22" generatedId="34"/>
-  <map modelId="15" generatedId="33" role="context-type"/>
-  <map modelId="15" generatedId="25" role="interface-file"/>
-  <map modelId="15" generatedId="30" role="cycle-method"/>
-  <map modelId="2" generatedId="80"/>
-  <map modelId="1" generatedId="79"/>
-  <map modelId="12" generatedId="77"/>
-  <map modelId="11" generatedId="78"/>
-  <map modelId="13" generatedId="76"/>
-  <map modelId="10" generatedId="75"/>
-  <map modelId="9" generatedId="74"/>
-  <map modelId="8" generatedId="73"/>
-  <map modelId="7" generatedId="72"/>
-  <map modelId="6" generatedId="71"/>
-  <map modelId="5" generatedId="70"/>
-  <map modelId="4" generatedId="69"/>
-  <map modelId="3" generatedId="68"/>
+  <map modelId="17" generatedId="30" role="context-parameter"/>
+  <map modelId="17" generatedId="29" role="init-method"/>
+  <map modelId="17" generatedId="32" role="context-parameter"/>
+  <map modelId="17" generatedId="31" role="reset-method"/>
+  <map modelId="17" generatedId="34" role="input-struct-parameter"/>
+  <map modelId="23" generatedId="47"/>
+  <map modelId="22" generatedId="46"/>
+  <map modelId="21" generatedId="45"/>
+  <map modelId="20" generatedId="44"/>
+  <map modelId="19" generatedId="43"/>
+  <map modelId="18" generatedId="42"/>
+  <map modelId="17" generatedId="41" role="input-struct-type"/>
+  <map modelId="17" generatedId="35" role="context-parameter"/>
+  <map modelId="27" generatedId="40"/>
+  <map modelId="26" generatedId="39"/>
+  <map modelId="25" generatedId="38"/>
+  <map modelId="24" generatedId="37"/>
+  <map modelId="17" generatedId="36" role="context-type"/>
+  <map modelId="17" generatedId="28" role="interface-file"/>
+  <map modelId="17" generatedId="33" role="cycle-method"/>
+  <map modelId="16" generatedId="94"/>
+  <map modelId="1" generatedId="54"/>
+  <map modelId="3" generatedId="90"/>
+  <map modelId="2" generatedId="89"/>
+  <map modelId="13" generatedId="87"/>
+  <map modelId="12" generatedId="88"/>
+  <map modelId="14" generatedId="86"/>
+  <map modelId="11" generatedId="85"/>
+  <map modelId="10" generatedId="84"/>
+  <map modelId="9" generatedId="83"/>
+  <map modelId="8" generatedId="82"/>
+  <map modelId="7" generatedId="81"/>
+  <map modelId="6" generatedId="80"/>
+  <map modelId="5" generatedId="79"/>
+  <map modelId="4" generatedId="78"/>
 </mapping>
 <!--$********** SCADE Suite KCG 32-bit 6.6.4 (build i3) **********
 ** mapping.xml

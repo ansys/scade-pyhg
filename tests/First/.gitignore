@@ -3,3 +3,5 @@ Model/Python/
 Test/Test_TEE/
 Test/Thg/
 *.trf
+*.htm
+*.err

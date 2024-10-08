@@ -163,3 +163,4 @@ cython_debug/
 *.sln
 *.pyproj
 TestResults/
+*.pdf

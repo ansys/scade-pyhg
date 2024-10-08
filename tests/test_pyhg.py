@@ -105,8 +105,7 @@ def test_get_operator(first_p1, path, expected, capsys):
 
 @pytest.mark.parametrize(
     'io_path, kind, expected',
-    # TODO: add at least sensors
-    [('P::Main/a', 'I', 'a'), ('P::Main/v', 'O', 'v')],
+    [('P::Main/a', 'I', 'a'), ('P::Main/v', 'O', 'v'), ('P::s', 'S', 's')],
 )
 def test_ios(first_p1, io_path: str, kind: str, expected: str):
     # kind: I (input) | O (output) | S (sensor) | P (probe)
@@ -121,6 +120,24 @@ def test_ios(first_p1, io_path: str, kind: str, expected: str):
         assert cls.is_input(io_path)
     if kind == 'O' or kind == 'P':
         assert cls.is_output(io_path)
+    if kind == 'S':
+        assert cls.is_sensor(io_path)
+
+
+@pytest.mark.parametrize(
+    'io, expected_prefix, expected_projection',
+    [
+        ('P::Main/a', 'P::Main/a', ''),
+        ('P::Main/v.a', 'P::Main/v', '.a'),
+        ('P::Main/v[1].b', 'P::Main/v', '[1].b'),
+        ('s.c[2]', 's', '.c[2]'),
+    ],
+)
+def test_split_io(io: str, expected_prefix: str, expected_projection: str):
+    cls = pyhg.PyHG()
+    prefix, projection = cls.split_io(io)
+    assert prefix == expected_prefix
+    assert projection == expected_projection
 
 
 @pytest.mark.parametrize(

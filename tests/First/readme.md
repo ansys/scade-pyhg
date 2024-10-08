@@ -36,6 +36,7 @@ The project `First` allows testing manually the Python custom target.
   Operator: P::Main
   Procedure: P1
 
+  test failed at step 2: v3=5.5 (expected 4.6)
   test failed at step 2: v=7 (expected 3)
   test failed at step 2: v1=3.0 (expected 7.02)
   test failed at step 2: v2=False (expected True)

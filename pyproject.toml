@@ -116,7 +116,7 @@ srg = "ansys.scade.pyhg:srg"
 PYHG266 = "ansys.scade.pyhg.pyhg"
 
 [tool.towncrier]
-package = "ansys.scade.puhg"
+package = "ansys.scade.pyhg"
 directory = "doc/changelog.d"
 filename = "doc/source/changelog.rst"
 start_string = ".. towncrier release notes start\n"

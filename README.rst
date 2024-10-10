@@ -47,9 +47,9 @@ produced by `Ansys SCADE Python Wrapper <https://python-wrapper.scade.docs.pyans
 Requirements
 ------------
 The ``ansys-scade-pyhg`` package supports only the versions of Python delivered with
-Ansys SCADE, starting from 2025 R1:
+Ansys SCADE, starting from 2024 R2:
 
-* 2025 R1 and later: Python 3.10
+* 2024 R2 and later: Python 3.10
 
 Ansys SCADE THG for Python has two installation modes: user and developer. To install for use,
 see `Getting started <https://pyhg.scade.docs.pyansys.com/version/stable/getting_started/index.html>`_.

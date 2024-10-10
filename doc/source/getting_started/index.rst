@@ -9,9 +9,9 @@ page on the Ansys website.
 Requirements
 ------------
 The ``ansys-scade-pyhg`` package supports only the versions of Python delivered with
-Ansys SCADE, starting from 2025 R1:
+Ansys SCADE, starting from 2024 R2:
 
-* 2025 R1 and later: Python 3.10
+* 2024 R2 and later: Python 3.10
 
 Install in user mode
 --------------------
@@ -31,6 +31,16 @@ for installing in developer mode.
    .. code:: bash
 
        python -m pip install --user ansys-scade-pyhg
+
+#. For Ansys SCADE 2024 R2, complete the installation with by copying
+   ``ansys/scade/pyhg/lib/qtethgpyhg66.py`` to the ``SCADE/scripts/Thg`` directory
+   of the SCADE 2024 R2 installation.
+
+   For example: ``C:\Program Files\ANSYS Inc\v242\SCADE\SCADE\scripts\Thg``.
+
+   .. Note::
+
+      Create the directory ``Thg`` if it does not exist.
 
 .. LINKS AND REFERENCES
 .. _pip: https://pypi.org/project/pip/

@@ -18,7 +18,6 @@ maintainers = [
     {name = "Ansys, Inc.", email = "pyansys.core@ansys.com"},
 ]
 dependencies=[
-    "importlib-metadata >= 4.0; python_version >= '3.8'",
     "ansys-scade-apitools",
     "pyparsing",
 ]

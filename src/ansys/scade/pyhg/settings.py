@@ -22,7 +22,6 @@
 
 """Settings page for SCADE Test THG."""
 
-
 import scade
 from scade.model.project.stdproject import Configuration, Project
 from scade.tool.suite.gui.settings import Page as SettingsPage

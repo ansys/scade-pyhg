@@ -22,7 +22,6 @@
 
 """Unit tests for thgrt.py."""
 
-
 from ansys.scade.pyhg.lib.thgrt import Thgrt
 
 

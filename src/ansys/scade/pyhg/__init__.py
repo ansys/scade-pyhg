@@ -25,8 +25,7 @@
 import importlib.metadata as importlib_metadata
 from pathlib import Path
 
-
-__version__ = importlib_metadata.version(__name__.replace(".", "-"))
+__version__ = importlib_metadata.version(__name__.replace('.', '-'))
 """The version of the package."""
 
 

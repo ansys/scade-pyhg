@@ -16,8 +16,8 @@ Contents
 .. toctree::
    :maxdepth: 1
 
-   getting_started/index
-   usage/index
+   getting-started/index
+   user-guide/index
    contributing
    changelog
 

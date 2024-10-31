@@ -86,10 +86,12 @@ to guarantee the project's integrity.
 
 The following ``tox`` commands are provided:
 
-- ``tox -e style``: Checks for coding style quality.
-- ``tox -e py``: Checks for unit tests.
-- ``tox -e py-coverage``: Checks for unit testing and code coverage.
-- ``tox -e doc``: Checks for the documentation-building process.
+* ``tox -e style``: Checks for coding style quality.
+* ``tox -e py``: Checks for unit tests.
+* ``tox -e py-coverage``: Checks for unit testing and code coverage.
+* ``tox -e doc``: Checks for the documentation-building process.
+   * ``tox -e doc-html``: Builds the HTML documentation.
+   * ``tox -e doc-links``: Checks for broken links in the documentation.
 
 Use raw testing
 ^^^^^^^^^^^^^^^

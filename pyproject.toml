@@ -76,10 +76,6 @@ lint.ignore = [
     "D203",  # One blank line required before class docstring.
     "D204",  # One blank line required after class docstring.
     "D206",  # To ignore: conflict with the formatter
-    # TODO
-    "D101",  # Missing docstring in public class
-    "D102",  # Missing docstring in public method
-    "D103",  # Missing docstring in public function
 ]
 
 # TODO: "preserve" leads to an error, although it is documented

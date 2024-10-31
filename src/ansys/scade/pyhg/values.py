@@ -37,7 +37,10 @@ from pyparsing import (
 
 
 class Value:
+    """A literal value."""
+
     def __init__(self, value) -> None:
+        """Initialize the value."""
         if value in {'true', 't', 'TRUE', 'True', 'T'}:
             value = 'True'
         elif value in {'false', 'f', 'FALSE', 'False', 'F'}:
@@ -50,23 +53,32 @@ class Value:
         self.value = value
 
     def flatten(self, suffix, literals):
+        """Flatten the value."""
         literals.append((suffix, self.value))
 
 
 class ListValues:
+    """A list of values."""
+
     def __init__(self, values) -> None:
+        """Initialize the values."""
         self.values = values
 
     def flatten(self, suffix, literals):
+        """Flatten the values."""
         for i, value in enumerate(self.values):
             value.flatten('%s[%d]' % (suffix, i), literals)
 
 
 class StructFields:
+    """A structure of fields."""
+
     def __init__(self, fields) -> None:
+        """Initialize the fields."""
         self.fields = {name: value for name, value in fields}
 
     def flatten(self, suffix, literals):
+        """Flatten the fields."""
         for name, value in self.fields.items():
             name = name + '_' if iskeyword(name) else name
             value.flatten('%s.%s' % (suffix, name), literals)
@@ -89,7 +101,10 @@ value_defn << (struct_defn | array_defn | literal)
 
 
 def flatten(literal: object):
+    """Flatten the literal."""
+
     def parse(literal: object) -> object:
+        """Parse the literal."""
         if isinstance(literal, list):
             return ListValues([parse(_) for _ in literal])
         elif isinstance(literal, dict):

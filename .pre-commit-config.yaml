@@ -28,6 +28,10 @@ repos:
     exclude: >
         (?x)^(
             .*\.etp|
+            .*\.vsw|
+            .*\.scade|
+            .*\.xscade|
+            .*\.sct
         )$
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -37,3 +41,4 @@ repos:
   - id: debug-statements
   - id: check-yaml
   - id: trailing-whitespace
+    exclude: (?x)^(.*\.tot)$

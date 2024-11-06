@@ -25,11 +25,8 @@
 import importlib.metadata as importlib_metadata
 from pathlib import Path
 
-try:
-    __version__ = importlib_metadata.version(__name__.replace('.', '-'))
-except (importlib_metadata.PackageNotFoundError, AttributeError):
-    # Handle the case where version cannot be determined
-    __version__ = '0.0.0'
+__version__ = importlib_metadata.version(__name__.replace('.', '-'))
+"""The version of the package."""
 
 
 TARGET = 'PYHG2'

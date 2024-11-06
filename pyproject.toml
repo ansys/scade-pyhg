@@ -12,13 +12,12 @@ readme="README.rst"
 requires-python = ">=3.10,<3.11"
 license = {file = "LICENSE"}
 authors = [
-    {name = "Ansys, Inc.", email = "pyansys.core@ansys.com"},
+    {name = "ANSYS, Inc.", email = "pyansys.core@ansys.com"},
 ]
 maintainers = [
-    {name = "Ansys, Inc.", email = "pyansys.core@ansys.com"},
+    {name = "ANSYS, Inc.", email = "pyansys.core@ansys.com"},
 ]
 dependencies=[
-    "importlib-metadata >= 4.0; python_version >= '3.8'",
     "ansys-scade-apitools",
     "pyparsing",
 ]
@@ -65,22 +64,18 @@ Homepage = "https://www.ansys.com/products/embedded-software/ansys-scade-suite"
 
 [tool.ruff]
 line-length = 100
-lint.select = [
-    "E",    # pycodestyle, see https://beta.ruff.rs/docs/rules/#pycodestyle-e-w
-    "D",    # pydocstyle, see https://beta.ruff.rs/docs/rules/#pydocstyle-d
-    "F",    # pyflakes, see https://beta.ruff.rs/docs/rules/#pyflakes-f
-    "I",    # isort, see https://beta.ruff.rs/docs/rules/#isort-i
-    "N",    # pep8-naming, see https://beta.ruff.rs/docs/rules/#pep8-naming-n
+fix = true
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle, see https://docs.astral.sh/ruff/rules/#pycodestyle-e-w
+    "D",    # pydocstyle, see https://docs.astral.sh/ruff/rules/#pydocstyle-d
+    "F",    # pyflakes, see https://docs.astral.sh/ruff/rules/#pyflakes-f
+    "I",    # isort, see https://docs.astral.sh/ruff/rules/#isort-i
+    "N",    # pep8-naming, see https://docs.astral.sh/ruff/rules/#pep8-naming-n
 ]
-lint.ignore = [
+ignore = [
     "E501",  # Line too long. Ignoring this so "ruff.formatter" manages line length.
-    "D203",  # One blank line required before class docstring.
-    "D204",  # One blank line required after class docstring.
-    "D206",  # To ignore: conflict with the formatter
-    # TODO
-    "D101",  # Missing docstring in public class
-    "D102",  # Missing docstring in public method
-    "D103",  # Missing docstring in public function
 ]
 
 # TODO: "preserve" leads to an error, although it is documented

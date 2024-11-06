@@ -31,6 +31,7 @@ tests_result = True
 
 
 def run_all(dir: Path):
+    """Run all the scenarios in the directory."""
     scenarios = list(Path(dir).glob('*.py'))
     for scenario in scenarios:
         global tests, tests_result

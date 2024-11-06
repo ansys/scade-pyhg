@@ -10,14 +10,42 @@ Refer to the chapter *Preparing Test Execution on Target* in the document
 for a complete reference. In particular the following section:
 *Declaring Custom Target*
 
-Contents
---------
+.. grid:: 1 2 3 3
+   :gutter: 1 2 3 3
+   :padding: 1 2 3 3
+
+   .. grid-item-card:: :material-regular:`power_settings_new;1.25em` Getting started
+      :link: getting-started/index
+      :link-type: doc
+
+      Learn how to install and use Ansys SCADE THG for Python.
+
+   .. grid-item-card:: :material-regular:`description;1.25em` User guide
+      :link: user-guide/index
+      :link-type: doc
+
+      Learn how to use Ansys SCADE THG for Python.
+
+   .. grid-item-card:: :material-regular:`group;1.25em` Contributing
+      :link: contributing
+      :link-type: doc
+
+      Learn how to contribute to Ansys SCADE THG for Python.
+
+
+   .. grid-item-card:: :material-regular:`update;1.25em` Changelog
+      :link: changelog
+      :link-type: doc
+
+      View the changelog for Ansys SCADE THG for Python.
+
 
 .. toctree::
    :maxdepth: 1
+   :hidden:
 
-   getting_started/index
-   usage/index
+   getting-started/index
+   user-guide/index
    contributing
    changelog
 

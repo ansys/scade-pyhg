@@ -65,7 +65,6 @@ jobs:
 
   tests:
     name: "Tests"
-    # runs-on: ${{ matrix.os }}
     runs-on: [self-hosted, 'SCADE']
     needs: [smoke-tests]
     strategy:

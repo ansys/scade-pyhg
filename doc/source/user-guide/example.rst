@@ -1,8 +1,8 @@
 Example
 =======
 
-This sections show the result of the harness generation for a simple
-SCADE Test SSS scenario: This scenario address the operator
+This section shows the result of the harness generation for a simple
+SCADE Test SSS scenario. This scenario addresses the operator
 ``Common::MinMaxU8``, defined in the ``Common.etp`` SCADE project.
 
 * Input scenario

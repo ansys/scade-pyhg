@@ -6,8 +6,7 @@ scripts from SCADE Tests projects. These Python tests target the Python proxies
 produced by `Ansys SCADE Python Wrapper <https://python-wrapper.scade.docs.pyansys.com/version/stable/getting_started/index.html>`_
 
 Refer to the chapter *Preparing Test Execution on Target* in the document
-*SCADE Test Help Resources* of the SCADE Suite documentation,
-for a complete reference. In particular the following section:
+*SCADE Test User Manual* for a complete reference. In particular the following section:
 *Declaring Custom Target*
 
 .. grid:: 1 2 3 3

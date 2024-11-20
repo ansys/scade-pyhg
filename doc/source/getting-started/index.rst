@@ -32,7 +32,7 @@ for installing in developer mode.
 
        python -m pip install --user ansys-scade-pyhg
 
-#. For Ansys SCADE 2024 R2, complete the installation with by copying
+#. For Ansys SCADE 2024 R2, complete the installation by copying
    ``ansys/scade/pyhg/lib/qtethgpyhg66.py`` to the ``SCADE/scripts/Thg`` directory
    of the SCADE 2024 R2 installation.
 

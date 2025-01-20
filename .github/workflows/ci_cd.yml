@@ -126,6 +126,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-library, update-changelog]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    permissions:
+      id-token: write
+      contents: write
     steps:
 
       - name: "Release to public PyPI"

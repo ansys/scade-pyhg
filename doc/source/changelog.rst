@@ -9,6 +9,29 @@ This document contains the release notes for the project.
 
 .. towncrier release notes start
 
+`2.1.0 <https://github.com/ansys/scade-pyhg/releases/tag/v2.1.0>`_ - 2025-01-22
+===============================================================================
+
+Fixed
+^^^^^
+
+- fix: `tox` env variable for test coverage `#7 <https://github.com/ansys/scade-pyhg/pull/7>`_
+- fix: trusted publisher permissions `#10 <https://github.com/ansys/scade-pyhg/pull/10>`_
+
+
+Documentation
+^^^^^^^^^^^^^
+
+- chore: update CHANGELOG for v2.0.0 `#5 <https://github.com/ansys/scade-pyhg/pull/5>`_
+- feat: Technical review `#6 <https://github.com/ansys/scade-pyhg/pull/6>`_
+- docs: review of user documentation `#8 <https://github.com/ansys/scade-pyhg/pull/8>`_
+
+
+Maintenance
+^^^^^^^^^^^
+
+- ci: Remove the dependencies to pr-name `#9 <https://github.com/ansys/scade-pyhg/pull/9>`_
+
 `2.0.0 <https://github.com/ansys/scade-pyhg/releases/tag/v2.0.0>`_ - 2024-10-10
 ===============================================================================
 

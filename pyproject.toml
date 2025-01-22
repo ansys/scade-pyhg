@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name="ansys-scade-pyhg"
-version="2.0.dev0"
+version="2.1.0"
 description ="SCADE Test Harness Generator for Python."
 readme="README.rst"
 

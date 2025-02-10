@@ -144,7 +144,6 @@ def test_rt_robustness(capsys):
 )
 def test_rt_special_real(init: float, check: float, expected: bool):
     rt = TestThgrt(Root(init), 'Root', 'Procedure')
-    # 1 == 1
     rt.check('o', check, tolerance=0.001)
     rt.cycle(1)
     assert not rt.failures if expected else rt.failures

@@ -56,6 +56,12 @@ from ansys.scade.pyhg.values import flatten
                 ('[3].i', "'x'"),
             ],
         ),
+        # special real
+        ('+Inf', [('', 'math.inf')]),
+        ('-Inf', [('', '-math.inf')]),
+        ('NaN', [('', 'math.nan')]),
+        ('qNaN', [('', 'math.nan')]),
+        ('sNaN', [('', 'math.nan')]),
     ],
 )
 def test_flatten_nominal(value: str | list | dict, expected: list[tuple[str, str]]):

@@ -194,6 +194,9 @@ class PyHG:
             args += f', sustain={n_sustain}'
         if not real_tol:
             real_tol = self.tolerances.get(dip, self.tolerances.get(''))
+        if real_tol and real_tol[-1] in 'r%':
+            # store relative tolerance as negative values
+            real_tol = '-' + real_tol[:-1]
         arg_tol = f', tolerance={real_tol}' if real_tol else ''
         if filter_:
             args += f', filter_={filter_}'

@@ -22,6 +22,8 @@
 
 """Runtime template for Python teste produced by Python Harness Generator."""
 
+import math
+
 
 class Check:
     """Check object for THG."""
@@ -85,16 +87,10 @@ class Thgrt:
         for name, check in self.checks.items():
             value = eval(f'self.root.{name}')
 
-            if check.tolerance:
-                delta = value - check.expected
-                if delta < 0:
-                    delta = -delta
-                if delta <= check.tolerance:
-                    passed = True
-                else:
-                    passed = False
+            if check.tolerance < 0:
+                passed = math.isclose(value, check.expected, rel_tol=-check.tolerance)
             else:
-                passed = value == check.expected
+                passed = math.isclose(value, check.expected, abs_tol=check.tolerance)
 
             # print only failed checks for clarity
             if not passed:

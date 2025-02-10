@@ -22,6 +22,8 @@
 
 """Unit tests for thgrt.py."""
 
+import pytest
+
 from ansys.scade.pyhg.lib.thgrt import Thgrt
 
 
@@ -70,6 +72,7 @@ def test_rt_single_check():
 
 def test_rt_finite_sustain():
     rt = TestThgrt(Root(), 'Root', 'Procedure')
+    # absolute tolerance
     rt.check('o', 2, sustain=4, tolerance=1)
     rt.cycle(3)
     assert not rt.failures
@@ -82,6 +85,7 @@ def test_rt_finite_sustain():
 
 def test_rt_infinite_sustain():
     rt = TestThgrt(Root(), 'Root', 'Procedure')
+    # absolute tolerance
     rt.check('o', 2, sustain=-1, tolerance=1)
     rt.cycle(3)
     assert not rt.failures
@@ -92,6 +96,32 @@ def test_rt_infinite_sustain():
     # sustain is over, no more checks: the number of failures does not change
     rt.cycle(5)
     assert len(rt.failures) == 5
+    # manually check the output
+    rt.close()
+
+
+@pytest.mark.parametrize(
+    'check, tolerance, expected',
+    [
+        # absolute tolerance
+        (2.1001, 0.1, False),
+        (1.8999, 0.1, False),
+        (2.0100, 0.1, True),
+        (1.9100, 0.1, True),
+        # relative tolerance
+        (2.1001, -0.1, True),
+        (1.8999, -0.1, True),
+        (2.1001, -0.02, False),
+        (1.8999, -0.02, False),
+    ],
+)
+def test_rt_rel_tolerance(check: float, tolerance: float, expected: bool):
+    rt = TestThgrt(Root(), 'Root', 'Procedure')
+    rt.cycle(1)
+    # relative tolerance 2%
+    rt.check('o', check, sustain=-1, tolerance=tolerance)
+    rt.cycle(1)
+    assert (not rt.failures) == expected
     # manually check the output
     rt.close()
 

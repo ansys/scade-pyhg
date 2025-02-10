@@ -22,6 +22,8 @@
 
 """Unit tests for thgrt.py."""
 
+import math
+
 import pytest
 
 from ansys.scade.pyhg.lib.thgrt import Thgrt
@@ -34,8 +36,8 @@ class Root:
     The output value is a counter.
     """
 
-    def __init__(self):
-        self.o = 0
+    def __init__(self, init=0.0):
+        self.o = init
 
     def call_cycle(self):
         self.o += 1
@@ -146,3 +148,30 @@ def test_rt_robustness(capsys):
     # something must have been written on stdout
     out = capsys.readouterr().out
     assert out
+
+
+@pytest.mark.parametrize(
+    'init, check, expected',
+    [
+        (0, math.nan, False),
+        (3.14, math.inf, False),
+        (-1, -math.inf, False),
+        (math.nan, 0, False),
+        (math.inf, 1, False),
+        (-math.inf, -3.14, False),
+        (math.nan, math.inf, False),
+        (math.nan, math.nan, True),
+        (math.nan, -math.inf, False),
+        (math.inf, math.inf, True),
+        (math.inf, math.nan, False),
+        (math.inf, -math.inf, False),
+        (-math.inf, math.inf, False),
+        (-math.inf, math.nan, False),
+        (-math.inf, -math.inf, True),
+    ],
+)
+def test_rt_special_real(init: float, check: float, expected: bool):
+    rt = TestThgrt(Root(init), 'Root', 'Procedure')
+    rt.check('o', check, tolerance=0.001)
+    rt.cycle(1)
+    assert not rt.failures if expected else rt.failures

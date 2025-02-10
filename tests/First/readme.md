@@ -7,13 +7,13 @@ The project `First` allows testing manually the Python custom target.
   [Install in user mode](<https://pyhg.scade.docs.pyansys.com/version/dev/contributing.html#install-in-user-mode>).
 
 ## Test
-* Open `Model/First.vsw` with SCADE.
+* Open `Model/First.vsw` with SCADE 2025 R1 or greater.
 * Activate the project `First.etp`.
 * Select the configuration `KCG`.
 * Launch the command `Project/Code Generator/Generate Node Main` and verify
   the code generation is successful.
 * Select the configuration `Python`.
-* Launch the command `Project/Code Generator/Build Node Root` and verify the
+* Launch the command `Project/Code Generator/Build Node Main` and verify the
   build is successful.
 * Activate the project `Test.etp`.
 * Launch the command `Project/Test Tool/Generate Target Test Harness` and
@@ -41,6 +41,12 @@ The project `First` allows testing manually the Python custom target.
   test failed at step 2: v1=3.0 (expected 7.02)
   test failed at step 2: v2=False (expected True)
   Test result: failed
+  ========================
+  ========================
+  Operator: P::Main
+  Procedure: P1
+
+  Test result: passed
   ========================
   ```
 

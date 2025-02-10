@@ -66,6 +66,8 @@ class PyHG:
         self.flatten_checks = {}
         # tolerances
         self.tolerances = {}
+        # math used for special real values
+        self.math_used = False
 
     def main(
         self,
@@ -121,6 +123,7 @@ class PyHG:
             )
             # assume one generated file per record
             target_scenario = target_dir / ('%s_%s.py' % (procedure.name, record.name)).lower()
+            self.math_used = False  # side effect
             with target_scenario.open('w') as self.f:
                 self.start_scenario()
                 for scenario, is_init in gen_record_scenarios(record):
@@ -131,6 +134,14 @@ class PyHG:
                             pass
                         thg.close()
                 self.close_scenario()
+            if self.math_used:
+                # patch the scenario to import math
+                lines = target_scenario.read_text().splitlines(keepends=True)
+                with target_scenario.open('w') as f:
+                    # write banner
+                    f.writelines(lines[0])
+                    f.write('\nimport math\n')
+                    f.writelines(lines[1:])
             generated_files.append(target_scenario.name)
 
         # generate the status file
@@ -167,6 +178,8 @@ class PyHG:
         name = self.resolve_io(path)
         name = self.filter_keyword(name)
         for suffix, literal in flatten(value):
+            if 'math.' in literal:
+                self.math_used = True
             self.writeln('%s.%s%s%s = %s' % (root, name, projection, suffix, literal))
 
     def on_check(
@@ -206,6 +219,8 @@ class PyHG:
         name = self.filter_keyword(name)
         flatten_names = []
         for suffix, literal in flatten(value):
+            if 'math.' in literal:
+                self.math_used = True
             flatten_name = name + projection + suffix
             if not arg_tol or literal in {'True', 'False'}:
                 # no tolerance

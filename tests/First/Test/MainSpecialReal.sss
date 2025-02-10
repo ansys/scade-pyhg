@@ -1,0 +1,20 @@
+# step 1
+SSM::set a1 {NaN}
+SSM::check v1 NaN
+SSM::cycle
+
+SSM::set a1 qNaN
+SSM::check v1 qNaN
+SSM::cycle
+
+SSM::set a1 sNaN
+SSM::check v1 sNaN
+SSM::cycle
+
+SSM::set a1 +Inf
+SSM::check v1 +Inf
+SSM::cycle
+
+SSM::set a1 -Inf
+SSM::check v1 -Inf
+SSM::cycle

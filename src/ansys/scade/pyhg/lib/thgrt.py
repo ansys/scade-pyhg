@@ -87,9 +87,7 @@ class Thgrt:
         for name, check in self.checks.items():
             value = eval(f'self.root.{name}')
 
-            if math.isinf(check.expected):
-                passed = value == check.expected
-            elif math.isnan(check.expected):
+            if math.isnan(check.expected):
                 passed = math.isnan(value)
             elif check.tolerance < 0:
                 passed = math.isclose(value, check.expected, rel_tol=-check.tolerance)

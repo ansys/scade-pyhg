@@ -70,7 +70,12 @@ class Thgrt:
     def check(
         self, name: str, expected: object, sustain: int = 1, tolerance: float = 0, filter_: str = ''
     ):
-        """Check a value."""
+        """
+        Check a value.
+
+        A negative value for tolerance means relative tolerance, otherwise the
+        tolerance is considered as absolute.
+        """
         self.checks[name] = Check(expected, sustain, tolerance, filter_)
 
     def uncheck(self, name: str):

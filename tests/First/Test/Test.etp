@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Project id="1" oid_count="78" defaultConfiguration="13">
+<Project id="1" oid_count="79" defaultConfiguration="13">
 	<props>
 		<Prop id="2" name="@STUDIO:PRODUCT">
 			<value>QTE</value>
@@ -283,6 +283,7 @@
 				<FileRef id="55" persistAs="MainInit.sss"/>
 				<FileRef id="56" persistAs="MainNominal.sss"/>
 				<FileRef id="75" persistAs="Preamble.sss"/>
+				<FileRef id="79" persistAs="MainSpecialReal.sss"/>
 			</elements>
 		</Folder>
 		<Folder id="60" extensions="trf" name="Results">

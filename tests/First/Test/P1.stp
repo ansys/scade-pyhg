@@ -14,6 +14,17 @@
 						<Scenario oid="988687DE-934A-4420-80FD-C793C274B359" persistAs="MainNominal.sss"/>
 					</scenarios>
 				</Record>
+				<Record oid="998A3316-AD6D-42A7-9C03-B6A80CB39E31" name="RealSpecial" description="Record1">
+					<inits>
+						<Scenario oid="8CE19ABC-1ED6-48E1-A3B5-83A02F1CEA15" persistAs="MainInit.sss"/>
+					</inits>
+					<preambles>
+						<Scenario oid="CBD276E1-BC7F-47EF-A6A1-967F384F8396" persistAs="Preamble.sss"/>
+					</preambles>
+					<scenarios>
+						<Scenario oid="8632DFB3-DFB8-4453-A8D3-A1DD79D4DEA3" persistAs="MainSpecialReal.sss"/>
+					</scenarios>
+				</Record>
 			</testElements>
 		</Folder>
 	</testElements>

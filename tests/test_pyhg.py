@@ -52,7 +52,7 @@ def first_p1() -> tuple[std.Project, qte.Procedure, c.MappingFile]:
 
 @pytest.mark.parametrize(
     'name, expected',
-    [('P1', {'Nominal'})],
+    [('P1', {'Nominal', 'RealSpecial'})],
 )
 def test_gen_procedure_records(first_p1, name, expected):
     _, procedure, _ = first_p1
@@ -62,7 +62,10 @@ def test_gen_procedure_records(first_p1, name, expected):
 
 @pytest.mark.parametrize(
     'name, expected',
-    [('Nominal', {'MainInit.sss', 'Preamble.sss', 'MainNominal.sss'})],
+    [
+        ('Nominal', {'MainInit.sss', 'Preamble.sss', 'MainNominal.sss'}),
+        ('RealSpecial', {'MainInit.sss', 'Preamble.sss', 'MainSpecialReal.sss'}),
+    ],
 )
 def test_gen_record_scenarios(first_p1, name, expected):
     _, procedure, _ = first_p1

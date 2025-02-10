@@ -45,6 +45,12 @@ class Value:
             value = 'True'
         elif value in {'false', 'f', 'FALSE', 'False', 'F'}:
             value = 'False'
+        elif value == 'NaN' or value == 'qNaN' or value == 'sNaN':
+            value = 'math.nan'
+        elif value == '+Inf':
+            value = 'math.inf'
+        elif value == '-Inf':
+            value = '-math.inf'
         else:
             # the following regular expressions are not exact
             # but should be enough for this context

@@ -95,9 +95,9 @@ class Thgrt:
             if math.isnan(check.expected):
                 passed = math.isnan(value)
             elif check.tolerance < 0:
-                passed = math.isclose(value, check.expected, rel_tol=-check.tolerance)
+                passed = math.isclose(value, check.expected, rel_tol=-check.tolerance, abs_tol=0)
             else:
-                passed = math.isclose(value, check.expected, abs_tol=check.tolerance)
+                passed = math.isclose(value, check.expected, rel_tol=0, abs_tol=check.tolerance)
 
             # print only failed checks for clarity
             if not passed:

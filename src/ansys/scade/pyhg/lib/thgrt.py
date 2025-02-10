@@ -90,7 +90,7 @@ class Thgrt:
         # flush all checks and remove those which are no longer valid
         to_remove = []
         for name, check in self.checks.items():
-            value = eval(f'self.root.{name}')
+            value = getattr(self.root, name)
 
             if math.isnan(check.expected):
                 passed = math.isnan(value)

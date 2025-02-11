@@ -70,7 +70,12 @@ class Thgrt:
     def check(
         self, name: str, expected: object, sustain: int = 1, tolerance: float = 0, filter_: str = ''
     ):
-        """Check a value."""
+        """
+        Check a value.
+
+        A negative value for tolerance means relative tolerance, otherwise the
+        tolerance is considered as absolute.
+        """
         self.checks[name] = Check(expected, sustain, tolerance, filter_)
 
     def uncheck(self, name: str):
@@ -85,22 +90,14 @@ class Thgrt:
         # flush all checks and remove those which are no longer valid
         to_remove = []
         for name, check in self.checks.items():
-            value = eval(f'self.root.{name}')
+            value = getattr(self.root, name)
 
-            if math.isinf(check.expected):
-                passed = value == check.expected
-            elif math.isnan(check.expected):
+            if math.isnan(check.expected):
                 passed = math.isnan(value)
-            elif check.tolerance:
-                delta = value - check.expected
-                if delta < 0:
-                    delta = -delta
-                if delta <= check.tolerance:
-                    passed = True
-                else:
-                    passed = False
+            elif check.tolerance < 0:
+                passed = math.isclose(value, check.expected, rel_tol=-check.tolerance, abs_tol=0)
             else:
-                passed = value == check.expected
+                passed = math.isclose(value, check.expected, rel_tol=0, abs_tol=check.tolerance)
 
             # print only failed checks for clarity
             if not passed:

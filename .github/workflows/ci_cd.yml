@@ -117,6 +117,7 @@ jobs:
     steps:
       - uses: ansys/actions/doc-deploy-changelog@v8
         with:
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
           token: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
           bot-user: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}
           bot-email: ${{ secrets.PYANSYS_CI_BOT_EMAIL }}
@@ -141,6 +142,7 @@ jobs:
         uses: ansys/actions/release-github@v8
         with:
           library-name: ${{ env.LIBRARY_NAME }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   doc-deploy-dev:
     name: "Deploy development documentation"

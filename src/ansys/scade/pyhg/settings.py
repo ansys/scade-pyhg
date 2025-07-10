@@ -138,13 +138,13 @@ class SettingsPagePyHG(SettingsPageEx):
     def on_display(self, project: Project, configuration: Configuration):
         """Display the page."""
         value = project.get_scalar_tool_prop_def(TARGET, 'P1', '', configuration)
-        assert self.ed_module
+        assert self.ed_module  # nosec B101  # addresses linter
         self.ed_module.set_name(value)
         value = project.get_scalar_tool_prop_def(TARGET, 'P2', '', configuration)
         if not value:
             # can't be empty
             value = 'ansys.scade.pyhg.lib.thgrt.Thgrt'
-        assert self.ed_rt
+        assert self.ed_rt  # nosec B101  # addresses linter
         self.ed_rt.set_name(value)
 
     def on_validate(self, project: Project, configuration: Configuration):
@@ -152,11 +152,11 @@ class SettingsPagePyHG(SettingsPageEx):
         # command line
         values = []
         # properties
-        assert self.ed_module
+        assert self.ed_module  # nosec B101  # addresses linter
         value = self.ed_module.get_name()
         project.set_scalar_tool_prop_def(TARGET, 'P1', value, '', configuration)
         values.extend(['-module_name', value] if value else [])
-        assert self.ed_rt
+        assert self.ed_rt  # nosec B101  # addresses linter
         value = self.ed_rt.get_name()
         project.set_scalar_tool_prop_def(TARGET, 'P2', value, '', configuration)
         values.extend(['-runtime_class', value] if value else [])

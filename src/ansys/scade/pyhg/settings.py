@@ -22,7 +22,6 @@
 
 """Settings page for SCADE Test THG."""
 
-import scade
 from scade.model.project.stdproject import Configuration, Project
 from scade.tool.suite.gui.settings import Page as SettingsPage
 from scade.tool.suite.gui.widgets import EditBox, Label, Widget
@@ -72,18 +71,19 @@ class PageUtils:
 
     def __init__(self):
         """Initialize the utilities."""
-        scade.output('initialized controls\n')
         # self.controls = []
 
     def add_edit(self, y: int, text: str) -> EditBox:
         """Add an edit box."""
         edit = LabelEditBox(self, text, wl1, x=xl1, y=y, w=wl1 + wf1)
-        self.controls.append(edit)
+        # self.controls is defined in sub-class
+        self.controls.append(edit)  # type: ignore
         return edit
 
     def layout_controls(self):
         """Layout the controls."""
-        for control in self.controls:
+        # self.controls is defined in sub-class
+        for control in self.controls:  # type: ignore
             control.on_layout()
 
 

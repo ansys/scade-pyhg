@@ -36,7 +36,7 @@ from ansys.scade.apitools.info import get_scade_home
 # to make sure sys.path is set properly and scade_env is imported
 # isort: split
 
-from scade.code.suite.sctoc import raw_tcl
+from scade.code.suite.sctoc import raw_tcl  # type: ignore  # CPython module defined dynamically
 
 parser = argparse.ArgumentParser(description='Python way for scade -test -thg')
 parser.add_argument('-p', '--project', metavar='<Scade project>', help='SCADE Suite', required=True)
@@ -54,6 +54,7 @@ options = parser.parse_args()
 
 os.makedirs(options.directory, exist_ok=True)
 
+assert declare_project  # nosec B101  # declare_project must be defined on Windows
 declare_project(options.project)
 
 

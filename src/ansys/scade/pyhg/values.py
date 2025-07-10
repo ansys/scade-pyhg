@@ -22,8 +22,10 @@
 
 """Parser for SCADE Test scenario values."""
 
+from abc import ABC, abstractmethod
 from keyword import iskeyword
 import re
+from typing import List, Tuple, Union
 
 from pyparsing import (
     Forward,
@@ -36,7 +38,16 @@ from pyparsing import (
 )
 
 
-class Value:
+class Value(ABC):
+    """Abstraction for values."""
+
+    @abstractmethod
+    def flatten(self, suffix: str, literals: List[Tuple[str, str]]):
+        """Flatten the value."""
+        raise NotImplementedError
+
+
+class Literal(Value):
     """A literal value."""
 
     def __init__(self, value) -> None:
@@ -58,32 +69,32 @@ class Value:
             value = re.sub(r'(.+)_f\d+', r'\1', value)
         self.value = value
 
-    def flatten(self, suffix, literals):
+    def flatten(self, suffix: str, literals: List[Tuple[str, str]]):
         """Flatten the value."""
         literals.append((suffix, self.value))
 
 
-class ListValues:
+class ListLiterals(Value):
     """A list of values."""
 
     def __init__(self, values) -> None:
         """Initialize the values."""
         self.values = values
 
-    def flatten(self, suffix, literals):
+    def flatten(self, suffix: str, literals: List[Tuple[str, str]]):
         """Flatten the values."""
         for i, value in enumerate(self.values):
             value.flatten('%s[%d]' % (suffix, i), literals)
 
 
-class StructFields:
+class StructFields(Value):
     """A structure of fields."""
 
     def __init__(self, fields) -> None:
         """Initialize the fields."""
         self.fields = {name: value for name, value in fields}
 
-    def flatten(self, suffix, literals):
+    def flatten(self, suffix: str, literals: List[Tuple[str, str]]):
         """Flatten the fields."""
         for name, value in self.fields.items():
             name = name + '_' if iskeyword(name) else name
@@ -92,7 +103,7 @@ class StructFields:
 
 LBRACE, RBRACE, LPAR, RPAR, COLON, COMMA = map(Suppress, '{}():,')
 ident = Word(alphas + '_', alphanums + '_').setName('name')
-literal = Regex(r'[^ \t\(\)\{\},:]+').setParseAction(lambda t: Value(t[0]))
+literal = Regex(r'[^ \t\(\)\{\},:]+').setParseAction(lambda t: Literal(t[0]))
 value_defn = Forward()
 field_defn = (ident('name') + COLON + value_defn('value')).setParseAction(
     lambda t: (t['name'], t['value'])
@@ -101,23 +112,25 @@ struct_defn = (LBRACE + delimitedList(field_defn, ',')('fields') + RBRACE).setPa
     lambda t: StructFields(t['fields'])
 )
 array_defn = (LPAR + delimitedList(value_defn, ',')('values') + RPAR).setParseAction(
-    lambda t: ListValues(t['values'])
+    lambda t: ListLiterals(t['values'])
 )
 value_defn << (struct_defn | array_defn | literal)
 
 
-def flatten(literal: object):
+def flatten(literal: Union[list, dict, str]):
     """Flatten the literal."""
 
-    def parse(literal: object) -> object:
+    def parse(literal: Union[list, dict, str]) -> Value:
         """Parse the literal."""
         if isinstance(literal, list):
-            return ListValues([parse(_) for _ in literal])
+            return ListLiterals([parse(_) for _ in literal])
         elif isinstance(literal, dict):
             return StructFields([(name, parse(value)) for name, value in literal.items()])
         else:
-            assert isinstance(literal, str)
-            return value_defn.parseString(literal)[0]
+            # assert isinstance(literal, str)
+            result = value_defn.parseString(literal)[0]
+            assert isinstance(result, Value)  # nosec B101  # addresses linter
+            return result
 
     literals = []
     tree = parse(literal)

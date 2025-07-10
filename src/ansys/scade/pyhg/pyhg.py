@@ -177,7 +177,8 @@ class PyHG:
         root = 'sensors' if self.is_sensor(path) else 'root'
         name = self.resolve_io(path)
         name = self.filter_keyword(name)
-        for suffix, literal in flatten(value):
+        # value's type annotation incomplete
+        for suffix, literal in flatten(value):  # type: ignore
             if 'math.' in literal:
                 self.math_used = True
             self.writeln('%s.%s%s%s = %s' % (root, name, projection, suffix, literal))
@@ -218,7 +219,8 @@ class PyHG:
         name = self.resolve_io(path)
         name = self.filter_keyword(name)
         flatten_names = []
-        for suffix, literal in flatten(value):
+        # value's type annotation incomplete
+        for suffix, literal in flatten(value):  # type: ignore
             if 'math.' in literal:
                 self.math_used = True
             flatten_name = name + projection + suffix
@@ -353,7 +355,8 @@ class PyHG:
         elif path in self.outputs:
             return self.outputs[path]
         elif path in self.sensors:
-            return self.sensors[path]
+            # the sensors must have a name
+            return self.sensors[path]  # type: ignore
         elif path in self.probes:
             return self.probes[path]
         else:

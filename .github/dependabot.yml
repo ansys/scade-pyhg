@@ -13,9 +13,9 @@ updates:
       prefix: "build (deps)"
     groups:
       dependencies:
-          patterns:
-            # group all dependencies to minimize repository management
-            - "*"
+        patterns:
+          # group all dependencies to minimize repository management
+          - "*"
 
   - package-ecosystem: "github-actions"
     directory: "/"

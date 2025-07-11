@@ -10,17 +10,12 @@ updates:
     assignees:
       - "pyansys-ci-bot"
     commit-message:
-      prefix: "build"
+      prefix: "build (deps)"
     groups:
-       docs-deps:
-          patterns:
-            - "ansys-sphinx-theme*"
-            - "sphinx*"
-            - "nbsphinx"
-            - "numpydoc"
-            - "sphinx"
-            - "jupyter_sphinx"
-
+      dependencies:
+        patterns:
+          # group all dependencies to minimize repository management
+          - "*"
 
   - package-ecosystem: "github-actions"
     directory: "/"

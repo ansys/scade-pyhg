@@ -335,7 +335,6 @@ class PyHG:
         """Split the I/O into the path and the projection."""
         m = re.match(r'([^\[\.]*)(.*)', io)
         assert m  # nosec B101  # addresses linter
-        # assert len(m.groups()) == 2
         return (m.groups()[0], m.groups()[1])
 
     def init_ios(self, mf: c.MappingFile, operator: m.Operator):

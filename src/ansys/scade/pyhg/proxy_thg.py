@@ -24,7 +24,7 @@
 
 try:
     # this module is dynamic and exists only during the execution of SCADE THG
-    import thg as _thg
+    import thg as _thg  # type: ignore
 except ModuleNotFoundError:
     # unit tests
     _thg = None

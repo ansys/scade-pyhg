@@ -22,7 +22,6 @@
 
 """Settings page for SCADE Test THG."""
 
-import scade
 from scade.model.project.stdproject import Configuration, Project
 from scade.tool.suite.gui.settings import Page as SettingsPage
 from scade.tool.suite.gui.widgets import EditBox, Label, Widget
@@ -72,18 +71,19 @@ class PageUtils:
 
     def __init__(self):
         """Initialize the utilities."""
-        scade.output('initialized controls\n')
         # self.controls = []
 
     def add_edit(self, y: int, text: str) -> EditBox:
         """Add an edit box."""
         edit = LabelEditBox(self, text, wl1, x=xl1, y=y, w=wl1 + wf1)
-        self.controls.append(edit)
+        # self.controls is defined in sub-class
+        self.controls.append(edit)  # type: ignore
         return edit
 
     def layout_controls(self):
         """Layout the controls."""
-        for control in self.controls:
+        # self.controls is defined in sub-class
+        for control in self.controls:  # type: ignore
             control.on_layout()
 
 
@@ -138,13 +138,13 @@ class SettingsPagePyHG(SettingsPageEx):
     def on_display(self, project: Project, configuration: Configuration):
         """Display the page."""
         value = project.get_scalar_tool_prop_def(TARGET, 'P1', '', configuration)
-        assert self.ed_module
+        assert self.ed_module  # nosec B101  # addresses linter
         self.ed_module.set_name(value)
         value = project.get_scalar_tool_prop_def(TARGET, 'P2', '', configuration)
         if not value:
             # can't be empty
             value = 'ansys.scade.pyhg.lib.thgrt.Thgrt'
-        assert self.ed_rt
+        assert self.ed_rt  # nosec B101  # addresses linter
         self.ed_rt.set_name(value)
 
     def on_validate(self, project: Project, configuration: Configuration):
@@ -152,11 +152,11 @@ class SettingsPagePyHG(SettingsPageEx):
         # command line
         values = []
         # properties
-        assert self.ed_module
+        assert self.ed_module  # nosec B101  # addresses linter
         value = self.ed_module.get_name()
         project.set_scalar_tool_prop_def(TARGET, 'P1', value, '', configuration)
         values.extend(['-module_name', value] if value else [])
-        assert self.ed_rt
+        assert self.ed_rt  # nosec B101  # addresses linter
         value = self.ed_rt.get_name()
         project.set_scalar_tool_prop_def(TARGET, 'P2', value, '', configuration)
         values.extend(['-runtime_class', value] if value else [])

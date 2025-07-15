@@ -333,9 +333,9 @@ class PyHG:
 
     def split_io(self, io: str) -> tuple[str, str]:
         """Split the I/O into the path and the projection."""
-        m = re.match(r'([^\[\.]*)(.*)', io)
-        assert m  # nosec B101  # addresses linter
-        return (m.groups()[0], m.groups()[1])
+        match_ = re.match(r'([^\[\.]*)(.*)', io)
+        assert match_  # nosec B101  # addresses linter
+        return (match_.groups()[0], match_.groups()[1])
 
     def init_ios(self, mf: c.MappingFile, operator: m.Operator):
         """Initialize the I/O dictionaries."""

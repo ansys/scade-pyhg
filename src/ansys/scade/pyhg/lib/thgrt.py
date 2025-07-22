@@ -63,7 +63,8 @@ class Thgrt:
         """Run the test for a number of cycles."""
         for cycle in range(cycles):
             # print("Step {}".format(self.step))
-            self.root.call_cycle()
+            # self.root does not have an abstraction that declares call_cycle
+            self.root.call_cycle()  # type: ignore
             self.check_values()
             self.step += 1
 

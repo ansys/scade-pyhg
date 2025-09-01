@@ -1,0 +1,6 @@
+User-agent: *
+
+Disallow: /version/2.1
+Disallow: /version/2.0
+
+Sitemap: https://pyhg.scade.docs.pyansys.com/sitemap.xml

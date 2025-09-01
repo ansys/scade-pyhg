@@ -10,7 +10,7 @@ updates:
     assignees:
       - "pyansys-ci-bot"
     commit-message:
-      prefix: "build (deps)"
+      prefix: "build(deps)"
     groups:
       dependencies:
         patterns:

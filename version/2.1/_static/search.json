@@ -1,0 +1,247 @@
+[
+    {
+        "objectID": "user-guide/index",
+        "href": "user-guide/index.html#user-guide",
+        "title": "User guide",
+        "section": "User guide",
+        "text": ""
+    },
+    {
+        "objectID": "getting-started/index",
+        "href": "getting-started/index.html#getting-started",
+        "title": "Getting started",
+        "section": "Getting started",
+        "text": "To use Ansys SCADE THG for Python, you must have a valid license for Ansys SCADE.\nFor information on getting a licensed copy, see the\nAnsys SCADE Suite\npage on the Ansys website.\nThe ansys-scade-pyhg package supports only the versions of Python delivered with\nAnsys SCADE, starting from 2024 R2:\n2024 R2 and later: Python 3.10\nThe following steps are for installing Ansys SCADE THG for Python in user mode. If you want to\ncontribute to Ansys SCADE THG for Python, see contribute_scade_pyhg for the steps\nfor installing in developer mode.\nBefore installing Ansys SCADE THG for Python in user mode, run this command to ensure that\nyou have the latest version of pip:\nInstall Ansys SCADE THG for Python with this command:\nFor Ansys SCADE 2024 R2, complete the installation by copying\nansys/scade/pyhg/lib/qtethgpyhg66.py to the SCADE/scripts/Thg directory\nof the SCADE 2024 R2 installation.\nFor example: C:\\Program Files\\ANSYS Inc\\v242\\SCADE\\SCADE\\scripts\\Thg.\nCreate the directory Thg if it does not exist.\npython -m pip install -U pip\npython -m pip install --user ansys-scade-pyhg"
+    },
+    {
+        "objectID": "getting-started/index",
+        "href": "getting-started/index.html#requirements",
+        "title": "Getting started > Requirements",
+        "section": "Requirements",
+        "text": "The ansys-scade-pyhg package supports only the versions of Python delivered with\nAnsys SCADE, starting from 2024 R2:\n2024 R2 and later: Python 3.10"
+    },
+    {
+        "objectID": "getting-started/index",
+        "href": "getting-started/index.html#install-in-user-mode",
+        "title": "Getting started > Install in user mode",
+        "section": "Install in user mode",
+        "text": "The following steps are for installing Ansys SCADE THG for Python in user mode. If you want to\ncontribute to Ansys SCADE THG for Python, see contribute_scade_pyhg for the steps\nfor installing in developer mode.\nBefore installing Ansys SCADE THG for Python in user mode, run this command to ensure that\nyou have the latest version of pip:\nInstall Ansys SCADE THG for Python with this command:\nFor Ansys SCADE 2024 R2, complete the installation by copying\nansys/scade/pyhg/lib/qtethgpyhg66.py to the SCADE/scripts/Thg directory\nof the SCADE 2024 R2 installation.\nFor example: C:\\Program Files\\ANSYS Inc\\v242\\SCADE\\SCADE\\scripts\\Thg.\nCreate the directory Thg if it does not exist.\npython -m pip install -U pip\npython -m pip install --user ansys-scade-pyhg"
+    },
+    {
+        "objectID": "user-guide/runtime",
+        "href": "user-guide/runtime.html#runtime",
+        "title": "Runtime",
+        "section": "Runtime",
+        "text": "The generated scenarios require a runtime for assessing the checks.\nIndeed, this requires an internal state, at least for caching properties like\ntolerances, aliases, or most importantly, the sustainability of the checks.\nOtherwise, the python script would become too verbose.\nIt is possible to tune the messages, execution reports, etc., by specifying\nyour own runtime class."
+    },
+    {
+        "objectID": "user-guide/limitations",
+        "href": "user-guide/limitations.html#known-limitations",
+        "title": "Known limitations",
+        "section": "Known limitations",
+        "text": "The name of the structuring folders are not considered to define the name of\nthe Python scripts. Two different records of a procedure with the same name\nlead to the same target file.\nThe probes are not considered.\nThe parameter filter of the on_check callback is ignored."
+    },
+    {
+        "objectID": "user-guide/thg",
+        "href": "user-guide/thg.html#test-harness-generation",
+        "title": "Test harness generation",
+        "section": "Test harness generation",
+        "text": "Select the extension Python Target Test Environment in SCADE Test Settings,\nHarness Generation tab.\nThe settings page Python Target Test Environment is visible when the target\nis selected:\nModule name (default name of the SCADE Suite model): Name of the Python proxy\nfor the tested root operators.\nRuntime class (default ansys.scade.pyhg.lib.thgrt.Thgrt): Class used by\nthe generated scripts to assess the checks. The default class is delivered as\nan example, you can provide your own runtime, for example by deriving a new\nclass from the default one.\nThe tool generates one Python script per test record, named\n<procedure>_<record>.py."
+    },
+    {
+        "objectID": "user-guide/thg",
+        "href": "user-guide/thg.html#settings",
+        "title": "Test harness generation > Settings",
+        "section": "Settings",
+        "text": "Select the extension Python Target Test Environment in SCADE Test Settings,\nHarness Generation tab.\nThe settings page Python Target Test Environment is visible when the target\nis selected:\nModule name (default name of the SCADE Suite model): Name of the Python proxy\nfor the tested root operators.\nRuntime class (default ansys.scade.pyhg.lib.thgrt.Thgrt): Class used by\nthe generated scripts to assess the checks. The default class is delivered as\nan example, you can provide your own runtime, for example by deriving a new\nclass from the default one."
+    },
+    {
+        "objectID": "user-guide/thg",
+        "href": "user-guide/thg.html#generation",
+        "title": "Test harness generation > Generation",
+        "section": "Generation",
+        "text": "The tool generates one Python script per test record, named\n<procedure>_<record>.py."
+    },
+    {
+        "objectID": "index",
+        "href": "index.html#ansys-scade-test-harness-generator-for-python",
+        "title": "Ansys SCADE Test Harness Generator for Python",
+        "section": "Ansys SCADE Test Harness Generator for Python",
+        "text": "Ansys SCADE Test Harness Generator (THG) for Python generates Python test\nscripts from SCADE Tests projects. These Python tests target the Python proxies\nproduced by Ansys SCADE Python Wrapper\nRefer to the chapter Preparing Test Execution on Target in the document\nSCADE Test User Manual for a complete reference. In particular the following section:\nDeclaring Custom Target\nLearn how to install and use Ansys SCADE THG for Python.\nLearn how to use Ansys SCADE THG for Python.\nLearn how to contribute to Ansys SCADE THG for Python.\nView the changelog for Ansys SCADE THG for Python.\ngenindex\nsearch"
+    },
+    {
+        "objectID": "index",
+        "href": "index.html#indices-and-tables",
+        "title": "Ansys SCADE Test Harness Generator for Python > Indices and tables",
+        "section": "Indices and tables",
+        "text": "genindex\nsearch"
+    },
+    {
+        "objectID": "changelog",
+        "href": "changelog.html#release-notes",
+        "title": "Release notes",
+        "section": "Release notes",
+        "text": "This document contains the release notes for the project.\nfix: tox env variable for test coverage #7\nfix: trusted publisher permissions #10\nchore: update CHANGELOG for v2.0.0 #5\nfeat: Technical review #6\ndocs: review of user documentation #8\nci: Remove the dependencies to pr-name #9\nfeat: Migrate the original repository to GitHub #1\nfeat: Add sensors and projections #3\nfix: Add support for SCADE 2024 R2 #4\nrefactor: Simplify the tests and add a new one for main #2"
+    },
+    {
+        "objectID": "changelog",
+        "href": "changelog.html#210---2025-01-22",
+        "title": "Release notes > 2.1.0 - 2025-01-22",
+        "section": "2.1.0 - 2025-01-22",
+        "text": "fix: tox env variable for test coverage #7\nfix: trusted publisher permissions #10\nchore: update CHANGELOG for v2.0.0 #5\nfeat: Technical review #6\ndocs: review of user documentation #8\nci: Remove the dependencies to pr-name #9"
+    },
+    {
+        "objectID": "changelog",
+        "href": "changelog.html#fixed",
+        "title": "Release notes > Fixed",
+        "section": "Fixed",
+        "text": "fix: tox env variable for test coverage #7\nfix: trusted publisher permissions #10"
+    },
+    {
+        "objectID": "changelog",
+        "href": "changelog.html#documentation",
+        "title": "Release notes > Documentation",
+        "section": "Documentation",
+        "text": "chore: update CHANGELOG for v2.0.0 #5\nfeat: Technical review #6\ndocs: review of user documentation #8"
+    },
+    {
+        "objectID": "changelog",
+        "href": "changelog.html#maintenance",
+        "title": "Release notes > Maintenance",
+        "section": "Maintenance",
+        "text": "ci: Remove the dependencies to pr-name #9"
+    },
+    {
+        "objectID": "changelog",
+        "href": "changelog.html#200---2024-10-10",
+        "title": "Release notes > 2.0.0 - 2024-10-10",
+        "section": "2.0.0 - 2024-10-10",
+        "text": "feat: Migrate the original repository to GitHub #1\nfeat: Add sensors and projections #3\nfix: Add support for SCADE 2024 R2 #4\nrefactor: Simplify the tests and add a new one for main #2"
+    },
+    {
+        "objectID": "changelog",
+        "href": "changelog.html#added",
+        "title": "Release notes > Added",
+        "section": "Added",
+        "text": "feat: Migrate the original repository to GitHub #1\nfeat: Add sensors and projections #3"
+    },
+    {
+        "objectID": "changelog",
+        "href": "changelog.html#fixed",
+        "title": "Release notes > Fixed",
+        "section": "Fixed",
+        "text": "fix: Add support for SCADE 2024 R2 #4"
+    },
+    {
+        "objectID": "changelog",
+        "href": "changelog.html#test",
+        "title": "Release notes > Test",
+        "section": "Test",
+        "text": "refactor: Simplify the tests and add a new one for main #2"
+    },
+    {
+        "objectID": "user-guide/example",
+        "href": "user-guide/example.html#example",
+        "title": "Example",
+        "section": "Example",
+        "text": "This section shows the result of the harness generation for a simple\nSCADE Test SSS scenario. This scenario addresses the operator\nCommon::MinMaxU8, defined in the Common.etp SCADE project.\nInput scenario\nPython script\nReminder: common.py and its class MinMax8 are produced by\nAnsys SCADE Python Wrapper.\nSSM::alias x Common::MinMaxU8/x\nSSM::alias y Common::MinMaxU8/y\nSSM::alias min Common::MinMaxU8/min\nSSM::alias max Common::MinMaxU8/max\n# input sequence for MinMaxU8\n# step 1\nSSM::set x 0\nSSM::set y 0\nSSM::check min 0\nSSM::check max 0\nSSM::cycle\nfrom common import MinMaxU8\nfrom ansys.scade.pyhg.lib.thgrt import Thgrt as Thgrt\n\n# instance of root operator\nroot = MinMaxU8()\n\n# instance of Thgrt\nthgrt = Thgrt(root, 'Common::MinMaxU8', 'MinMaxU8')\n\n# input sequence for MinMaxU8\n# step 1\nroot.x = 0\nroot.y = 0\nthgrt.check(\"min\", 0)\nthgrt.check(\"max\", 0)\nthgrt.cycle(1)"
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#contribute",
+        "title": "Contribute",
+        "section": "Contribute",
+        "text": "Overall guidance on contributing to a PyAnsys library appears in\nContributing\nin the PyAnsys developer’s guide. Ensure that you are thoroughly familiar\nwith this guide before attempting to contribute to Ansys SCADE THG for Python.\nThe following contribution information is specific to Ansys SCADE THG for Python.\nInstalling Ansys SCADE THG for Python in developer mode allows you to modify the\nsource and enhance it.\nClone the ansys-scade-pyhg repository:\nAccess the scade-pyhg directory where the repository has been cloned:\nCreate a clean Python 3.10 environment and activate it:\nYou should use the interpreter delivered with Ansys SCADE. For example,\nC:\\Program Files\\ANSYS Inc\\v241\\SCADE\\contrib\\Python310\\python.exe.\nMake sure that you have the latest required build system, documentation, testing,\nand CI tools:\nInstall the project in editable mode:\nUse tox to verify your development installation:\nAnsys SCADE THG for Python uses tox for testing. This tool allows you to\nautomate common development tasks (similar to Makefile), but it is oriented\ntowards Python development.\nWhile Makefile has rules, tox has environments. In fact, tox creates its\nown virtual environment so that anything being tested is isolated from the project\nto guarantee the project’s integrity.\nThe following tox commands are provided:\ntox -e style: Checks for coding style quality.\ntox -e tests: Checks for unit tests.\ntox -e tests-coverage: Checks for unit testing and code coverage\ntox -e doc-html: Builds the HTML documentation.\ntox -e doc-links: Checks for broken links in the documentation.\nIf required, from the command line, you can call style commands like\nruff. You can also call unit testing commands like pytest.\nHowever, running these commands does not guarantee that your project is being tested in an\nisolated environment, which is the reason why tools like tox exist.\nAnsys SCADE THG for Python follows the PEP8 standard as outlined in\nPEP 8 in\nthe PyAnsys developer’s guide and implements style checking using\npre-commit.\nTo ensure your code meets minimum code styling standards, run these commands:\nYou can also install this as a pre-commit hook by running this command:\nThis way, it’s not possible for you to push code that fails the style checks:\nFor building documentation, you can run the usual rules provided in the\nSphinx make file. Here are some examples:\nHowever, the recommended way of checking documentation integrity is to use\ntox:\nAnsys SCADE Test Harness Generator needs to be registered to SCADE for\nintegration testing. Indeed, it is called by SCADE Test Harness Generation.\nIt is not possible to reuse the virtual environment setup for the repository.\nYou must install the package in an environment accessible by SCADE, for\nexample its own Python distribution, although this is not advised,\nor the Python 3.10 user distribution:\nYou can reuse any <install>\\SCADE\\contrib\\Python310\\python.exe\nor Python 3.10 installation on your computer.\nThe .\\tests\\Debug\\debug.py script uses internal SCADE Test Harness Generation\nentry points to start a debug session for the scripts.\nYou must use the Python 3.10 environment delivered with SCADE, located in\n<install>\\contrib\\Python310.\nFor example:\nC:\\Program Files\\ANSYS Inc\\v251\\SCADE\\contrib\\Python310.\nConfigure PYTHONPATH to refer to <install>\\SCADE\\bin and\n<install>\\SCADE\\APIs\\Python\\lib. For example:\nRefer to .\\tests\\Debug\\debug.py for its command line parameters.\nThese are manual tests. Refer to the test procedures, contained in each test\ndirectory as readme files.\nOnce the test or debug sessions are completed, you may uninstall the package\nas follows:\nIf you would like to create either source or wheel files, start by installing\nthe building requirements and then executing the build module:\nUse the Ansys SCADE THG for Python Issues\npage to submit questions, report bugs, and request new features. When possible, use\nthese templates:\nBug, problem, error: For filing a bug report\nDocumentation error: For requesting modifications to the documentation\nAdding an example: For proposing a new example\nNew feature: For requesting enhancements to the code\nIf your issue does not fit into one of these template categories, click\nthe link for opening a blank issue.\nTo reach the project support team, email pyansys.core@ansys.com.\ngit clone https://github.com/ansys/scade-pyhg\ncd scade-pyhg\n# Create a virtual environment\npython -m venv .venv\n\n# Activate it in a POSIX system\nsource .venv/bin/activate\n\n# Activate it in Windows CMD environment\n.venv\\Scripts\\activate.bat\n\n# Activate it in Windows Powershell\n.venv\\Scripts\\Activate.ps1\npython -m pip install -U pip     # Upgrading pip\npython -m pip install tox        # Installing tox (optional)\npython -m pip install .[build]   # for building the wheels\npython -m pip install .[tests]   # for testing the package\npython -m pip install .[doc]     # for building the documentation\npython -m pip install --editable .\ntox\npip install pre-commit\npre-commit run --all-files\npre-commit install\n$ pre-commit install\n$ git commit -am \"added my cool feature\"\nAdd License Headers......................................................Passed\nruff.....................................................................Passed\nruff-format..............................................................Passed\ncodespell................................................................Passed\ncheck for merge conflicts................................................Passed\ndebug statements (python)................................................Passed\ncheck yaml...............................................................Passed\ntrim trailing whitespace.................................................Passed\n#  build and view the doc from the POSIX system\nmake -C doc/ html && your_browser_name doc/html/index.html\n\n# build and view the doc from a Windows environment\n.\\doc\\make.bat clean\n.\\doc\\make.bat html\nstart .\\doc\\_build\\html\\index.html\ntox -e doc-html && your_browser_name .tox/doc_out/index.html\n<python310.exe> -m pip install --user --editable .\nset PYTHONPATH=C:\\Program Files\\ANSYS Inc\\v251\\SCADE\\SCADE\\bin;C:\\Program Files\\ANSYS Inc\\v251\\SCADE\\SCADE\\APIs\\Python\\lib\n<python310.exe> -m pip uninstall ansys-scade-pyhg\npython -m pip install .[build]\npython -m build\npython -m twine check dist/*"
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#install-in-developer-mode",
+        "title": "Contribute > Install in developer mode",
+        "section": "Install in developer mode",
+        "text": "Installing Ansys SCADE THG for Python in developer mode allows you to modify the\nsource and enhance it.\nClone the ansys-scade-pyhg repository:\nAccess the scade-pyhg directory where the repository has been cloned:\nCreate a clean Python 3.10 environment and activate it:\nYou should use the interpreter delivered with Ansys SCADE. For example,\nC:\\Program Files\\ANSYS Inc\\v241\\SCADE\\contrib\\Python310\\python.exe.\nMake sure that you have the latest required build system, documentation, testing,\nand CI tools:\nInstall the project in editable mode:\nUse tox to verify your development installation:\ngit clone https://github.com/ansys/scade-pyhg\ncd scade-pyhg\n# Create a virtual environment\npython -m venv .venv\n\n# Activate it in a POSIX system\nsource .venv/bin/activate\n\n# Activate it in Windows CMD environment\n.venv\\Scripts\\activate.bat\n\n# Activate it in Windows Powershell\n.venv\\Scripts\\Activate.ps1\npython -m pip install -U pip     # Upgrading pip\npython -m pip install tox        # Installing tox (optional)\npython -m pip install .[build]   # for building the wheels\npython -m pip install .[tests]   # for testing the package\npython -m pip install .[doc]     # for building the documentation\npython -m pip install --editable .\ntox"
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#unit-test",
+        "title": "Contribute > Unit test",
+        "section": "Unit test",
+        "text": "Ansys SCADE THG for Python uses tox for testing. This tool allows you to\nautomate common development tasks (similar to Makefile), but it is oriented\ntowards Python development.\nWhile Makefile has rules, tox has environments. In fact, tox creates its\nown virtual environment so that anything being tested is isolated from the project\nto guarantee the project’s integrity.\nThe following tox commands are provided:\ntox -e style: Checks for coding style quality.\ntox -e tests: Checks for unit tests.\ntox -e tests-coverage: Checks for unit testing and code coverage\ntox -e doc-html: Builds the HTML documentation.\ntox -e doc-links: Checks for broken links in the documentation.\nIf required, from the command line, you can call style commands like\nruff. You can also call unit testing commands like pytest.\nHowever, running these commands does not guarantee that your project is being tested in an\nisolated environment, which is the reason why tools like tox exist.\nAnsys SCADE THG for Python follows the PEP8 standard as outlined in\nPEP 8 in\nthe PyAnsys developer’s guide and implements style checking using\npre-commit.\nTo ensure your code meets minimum code styling standards, run these commands:\nYou can also install this as a pre-commit hook by running this command:\nThis way, it’s not possible for you to push code that fails the style checks:\npip install pre-commit\npre-commit run --all-files\npre-commit install\n$ pre-commit install\n$ git commit -am \"added my cool feature\"\nAdd License Headers......................................................Passed\nruff.....................................................................Passed\nruff-format..............................................................Passed\ncodespell................................................................Passed\ncheck for merge conflicts................................................Passed\ndebug statements (python)................................................Passed\ncheck yaml...............................................................Passed\ntrim trailing whitespace.................................................Passed"
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#use-tox",
+        "title": "Contribute > Use tox",
+        "section": "Use tox",
+        "text": "While Makefile has rules, tox has environments. In fact, tox creates its\nown virtual environment so that anything being tested is isolated from the project\nto guarantee the project’s integrity.\nThe following tox commands are provided:\ntox -e style: Checks for coding style quality.\ntox -e tests: Checks for unit tests.\ntox -e tests-coverage: Checks for unit testing and code coverage\ntox -e doc-html: Builds the HTML documentation.\ntox -e doc-links: Checks for broken links in the documentation."
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#use-raw-testing",
+        "title": "Contribute > Use raw testing",
+        "section": "Use raw testing",
+        "text": "If required, from the command line, you can call style commands like\nruff. You can also call unit testing commands like pytest.\nHowever, running these commands does not guarantee that your project is being tested in an\nisolated environment, which is the reason why tools like tox exist."
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#use-pre-commit",
+        "title": "Contribute > Use pre-commit",
+        "section": "Use pre-commit",
+        "text": "Ansys SCADE THG for Python follows the PEP8 standard as outlined in\nPEP 8 in\nthe PyAnsys developer’s guide and implements style checking using\npre-commit.\nTo ensure your code meets minimum code styling standards, run these commands:\nYou can also install this as a pre-commit hook by running this command:\nThis way, it’s not possible for you to push code that fails the style checks:\npip install pre-commit\npre-commit run --all-files\npre-commit install\n$ pre-commit install\n$ git commit -am \"added my cool feature\"\nAdd License Headers......................................................Passed\nruff.....................................................................Passed\nruff-format..............................................................Passed\ncodespell................................................................Passed\ncheck for merge conflicts................................................Passed\ndebug statements (python)................................................Passed\ncheck yaml...............................................................Passed\ntrim trailing whitespace.................................................Passed"
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#build-documentation",
+        "title": "Contribute > Build documentation",
+        "section": "Build documentation",
+        "text": "For building documentation, you can run the usual rules provided in the\nSphinx make file. Here are some examples:\nHowever, the recommended way of checking documentation integrity is to use\ntox:\n#  build and view the doc from the POSIX system\nmake -C doc/ html && your_browser_name doc/html/index.html\n\n# build and view the doc from a Windows environment\n.\\doc\\make.bat clean\n.\\doc\\make.bat html\nstart .\\doc\\_build\\html\\index.html\ntox -e doc-html && your_browser_name .tox/doc_out/index.html"
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#debug-and-integration-test",
+        "title": "Contribute > Debug and integration test",
+        "section": "Debug and integration test",
+        "text": "Ansys SCADE Test Harness Generator needs to be registered to SCADE for\nintegration testing. Indeed, it is called by SCADE Test Harness Generation.\nIt is not possible to reuse the virtual environment setup for the repository.\nYou must install the package in an environment accessible by SCADE, for\nexample its own Python distribution, although this is not advised,\nor the Python 3.10 user distribution:\nYou can reuse any <install>\\SCADE\\contrib\\Python310\\python.exe\nor Python 3.10 installation on your computer.\nThe .\\tests\\Debug\\debug.py script uses internal SCADE Test Harness Generation\nentry points to start a debug session for the scripts.\nYou must use the Python 3.10 environment delivered with SCADE, located in\n<install>\\contrib\\Python310.\nFor example:\nC:\\Program Files\\ANSYS Inc\\v251\\SCADE\\contrib\\Python310.\nConfigure PYTHONPATH to refer to <install>\\SCADE\\bin and\n<install>\\SCADE\\APIs\\Python\\lib. For example:\nRefer to .\\tests\\Debug\\debug.py for its command line parameters.\nThese are manual tests. Refer to the test procedures, contained in each test\ndirectory as readme files.\nOnce the test or debug sessions are completed, you may uninstall the package\nas follows:\n<python310.exe> -m pip install --user --editable .\nset PYTHONPATH=C:\\Program Files\\ANSYS Inc\\v251\\SCADE\\SCADE\\bin;C:\\Program Files\\ANSYS Inc\\v251\\SCADE\\SCADE\\APIs\\Python\\lib\n<python310.exe> -m pip uninstall ansys-scade-pyhg"
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#install-in-user-mode",
+        "title": "Contribute > Install in user mode",
+        "section": "Install in user mode",
+        "text": "It is not possible to reuse the virtual environment setup for the repository.\nYou must install the package in an environment accessible by SCADE, for\nexample its own Python distribution, although this is not advised,\nor the Python 3.10 user distribution:\nYou can reuse any <install>\\SCADE\\contrib\\Python310\\python.exe\nor Python 3.10 installation on your computer.\n<python310.exe> -m pip install --user --editable ."
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#debug",
+        "title": "Contribute > Debug",
+        "section": "Debug",
+        "text": "The .\\tests\\Debug\\debug.py script uses internal SCADE Test Harness Generation\nentry points to start a debug session for the scripts.\nYou must use the Python 3.10 environment delivered with SCADE, located in\n<install>\\contrib\\Python310.\nFor example:\nC:\\Program Files\\ANSYS Inc\\v251\\SCADE\\contrib\\Python310.\nConfigure PYTHONPATH to refer to <install>\\SCADE\\bin and\n<install>\\SCADE\\APIs\\Python\\lib. For example:\nRefer to .\\tests\\Debug\\debug.py for its command line parameters.\nset PYTHONPATH=C:\\Program Files\\ANSYS Inc\\v251\\SCADE\\SCADE\\bin;C:\\Program Files\\ANSYS Inc\\v251\\SCADE\\SCADE\\APIs\\Python\\lib"
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#run-the-integration-tests",
+        "title": "Contribute > Run the integration tests",
+        "section": "Run the integration tests",
+        "text": "These are manual tests. Refer to the test procedures, contained in each test\ndirectory as readme files."
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#uninstall",
+        "title": "Contribute > Uninstall",
+        "section": "Uninstall",
+        "text": "Once the test or debug sessions are completed, you may uninstall the package\nas follows:\n<python310.exe> -m pip uninstall ansys-scade-pyhg"
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#distribute",
+        "title": "Contribute > Distribute",
+        "section": "Distribute",
+        "text": "If you would like to create either source or wheel files, start by installing\nthe building requirements and then executing the build module:\npython -m pip install .[build]\npython -m build\npython -m twine check dist/*"
+    },
+    {
+        "objectID": "contributing",
+        "href": "contributing.html#post-issues",
+        "title": "Contribute > Post issues",
+        "section": "Post issues",
+        "text": "Use the Ansys SCADE THG for Python Issues\npage to submit questions, report bugs, and request new features. When possible, use\nthese templates:\nBug, problem, error: For filing a bug report\nDocumentation error: For requesting modifications to the documentation\nAdding an example: For proposing a new example\nNew feature: For requesting enhancements to the code\nIf your issue does not fit into one of these template categories, click\nthe link for opening a blank issue.\nTo reach the project support team, email pyansys.core@ansys.com."
+    }
+]

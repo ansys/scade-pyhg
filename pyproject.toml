@@ -49,7 +49,7 @@ doc = [
     "sphinx-autodoc-typehints==3.0.1; python_version <= '3.10'",
     "sphinxcontrib-globalsubs==1.0.0; python_version >= '3.12'",
     "sphinxcontrib-globalsubs==0.1.2; python_version <= '3.10'",
-    "sphinxcontrib-httpdomain==1.8.1",
+    "sphinxcontrib-httpdomain==2.0.0",
     "sphinx-copybutton==0.5.2",
 ]
 

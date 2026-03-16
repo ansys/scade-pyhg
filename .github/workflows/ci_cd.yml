@@ -13,7 +13,6 @@ on:
   workflow_dispatch:
 
 env:
-  MAIN_PYTHON_VERSION: '3.12'
   DOCUMENTATION_CNAME: 'pyhg.scade.docs.pyansys.com'
   LIBRARY_NAME: 'ansys-scade-pyhg'
 
@@ -38,7 +37,6 @@ jobs:
       library-name: "ansys-scade-pyhg"
       repository-name: "ansys/scade-pyhg"
       is-public: true
-      main-python-version: '3.12'
       # strategies
       build-wheelhouse-versions: "['3.10']"
       python-tests-versions: "['3.10']"

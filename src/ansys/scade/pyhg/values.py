@@ -28,13 +28,13 @@ import re
 from typing import List, Tuple, Union
 
 from pyparsing import (
+    DelimitedList,
     Forward,
     Regex,
     Suppress,
     Word,
     alphanums,
     alphas,
-    delimitedList,
 )
 
 
@@ -102,16 +102,16 @@ class StructFields(Value):
 
 
 LBRACE, RBRACE, LPAR, RPAR, COLON, COMMA = map(Suppress, '{}():,')
-ident = Word(alphas + '_', alphanums + '_').setName('name')
-literal = Regex(r'[^ \t\(\)\{\},:]+').setParseAction(lambda t: Literal(t[0]))
+ident = Word(alphas + '_', alphanums + '_').set_name('name')
+literal = Regex(r'[^ \t\(\)\{\},:]+').set_parse_action(lambda t: Literal(t[0]))
 value_defn = Forward()
-field_defn = (ident('name') + COLON + value_defn('value')).setParseAction(
+field_defn = (ident('name') + COLON + value_defn('value')).set_parse_action(
     lambda t: (t['name'], t['value'])
 )
-struct_defn = (LBRACE + delimitedList(field_defn, ',')('fields') + RBRACE).setParseAction(
+struct_defn = (LBRACE + DelimitedList(field_defn, ',')('fields') + RBRACE).set_parse_action(
     lambda t: StructFields(t['fields'])
 )
-array_defn = (LPAR + delimitedList(value_defn, ',')('values') + RPAR).setParseAction(
+array_defn = (LPAR + DelimitedList(value_defn, ',')('values') + RPAR).set_parse_action(
     lambda t: ListLiterals(t['values'])
 )
 value_defn << (struct_defn | array_defn | literal)
@@ -128,7 +128,7 @@ def flatten(literal: Union[list, dict, str]):
             return StructFields([(name, parse(value)) for name, value in literal.items()])
         else:
             # assert isinstance(literal, str)
-            result = value_defn.parseString(literal)[0]
+            result = value_defn.parse_string(literal)[0]
             assert isinstance(result, Value)  # nosec B101  # addresses linter
             return result
 

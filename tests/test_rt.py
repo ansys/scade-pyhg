@@ -46,6 +46,8 @@ class Root:
 class TestThgrt(Thgrt):
     """Cache the failures."""
 
+    __test__ = False
+
     def __init__(self, *args):
         super().__init__(*args)
         self.failures = []

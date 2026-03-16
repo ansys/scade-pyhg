@@ -53,6 +53,8 @@ def first_p1() -> tuple[std.Project, qte.Procedure, c.MappingFile]:
 class TestPyHG(pyhg.PyHG):
     """Redirects the printouts."""
 
+    __test__ = False
+
     def __init__(self, mf: Optional[c.MappingFile] = None, path: str = ''):
         super().__init__()
         self.stream = io.StringIO()

@@ -37,9 +37,9 @@ jobs:
       library-name: "ansys-scade-pyhg"
       repository-name: "ansys/scade-pyhg"
       is-public: true
-      python-tests-versions: "['3.10']"
       main-python-version: '3.14'
       build-wheelhouse-versions: "['3.10', '3.12']"
+      scade-tests-versions: "['25.2', '26.1']"
     secrets:
       PYANSYS_CI_BOT_TOKEN: ${{ secrets.PYANSYS_CI_BOT_TOKEN }}
       PYANSYS_CI_BOT_USERNAME: ${{ secrets.PYANSYS_CI_BOT_USERNAME }}

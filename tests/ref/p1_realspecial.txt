@@ -1,0 +1,6 @@
+========================
+Operator: P::Main
+Procedure: P1
+
+Test result: passed
+========================

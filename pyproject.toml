@@ -40,6 +40,7 @@ tests = [
     "pytest <= 7.4.4; python_version < '3.8'",
     "pytest-cov >= 6.0.0; python_version >= '3.8'",
     "pytest-cov <= 4.1.0; python_version < '3.8'",
+    "ansys-scade-python-wrapper >= 2.3.0",
 ]
 doc = [
     "ansys-sphinx-theme[autoapi]==1.7.0; python_version >= '3.12'",

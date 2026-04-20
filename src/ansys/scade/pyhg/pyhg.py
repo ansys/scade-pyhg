@@ -195,7 +195,11 @@ class PyHG:
         filter_: str,
     ):
         """Call the check action."""
-        # print("check: {0} {1} {2} {3} {4} {5} {6} {7}".format(line, col, dip, value, sustain, int_tol, real_tol, filter))
+        # print(
+        #     'check: {0} {1} {2} {3} {4} {5} {6} {7}'.format(
+        #         line, col, dip, value, sustain, int_tol, real_tol, filter
+        #     )
+        # )
         # register the check
         args = ''
         if sustain == 'forever':
@@ -344,7 +348,8 @@ class PyHG:
         self.outputs = {_.get_scade_path(): _.get_name() for _ in operator.get_outputs()}
         # remove trailing '/' to be consistent with local variables
         self.sensors = {_.get_scade_path().strip('/'): _.get_name() for _ in mf.get_all_sensors()}
-        # TODO: probes from the mapping
+        # TODO(JH): probes from the mapping
+        # https://pyhg.scade.docs.pyansys.com/version/stable/user-guide/limitations.html
         self.probes = {}
 
     def resolve_io(self, path: str) -> str:
@@ -359,7 +364,7 @@ class PyHG:
         elif path in self.probes:
             return self.probes[path]
         else:
-            # TODO: consider the default as probes?
+            # assert False
             # rationale: THG already checks the names are valid
             print('%s: unknown I/O' % path)
             return '<%s>' % path

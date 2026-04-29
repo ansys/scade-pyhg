@@ -1,5 +1,8 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
+requires = [
+    "flit_core >=3.9,<3.12; python_version < '3.8'",
+    "flit_core >=3.12,<4; python_version >= '3.8'",
+]
 build-backend = "flit_core.buildapi"
 
 [project]
@@ -56,9 +59,6 @@ doc = [
     "sphinx-copybutton==0.5.2",
 ]
 
-[tool.flit.module]
-name = "ansys.scade.pyhg"
-
 [project.urls]
 Source = "https://github.com/ansys/scade-pyhg"
 Issues = "https://github.com/ansys/scade-pyhg/issues"
@@ -67,9 +67,22 @@ Documentation = "https://pyhg.scade.docs.pyansys.com"
 Releases = "https://github.com/ansys/scade-pyhg/releases"
 Homepage = "https://www.ansys.com/products/embedded-software/ansys-scade-suite"
 
+[project.entry-points."ansys.scade.registry"]
+srg = "ansys.scade.pyhg:srg"
+
+[project.entry-points."ansys.scade.test.thg"]
+PYHG266 = "ansys.scade.pyhg.pyhg"
+
+[tool.flit.module]
+name = "ansys.scade.pyhg"
+
 [tool.ruff]
 line-length = 100
 fix = true
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
 
 [tool.ruff.lint]
 select = [
@@ -78,15 +91,10 @@ select = [
     "F",    # pyflakes, see https://docs.astral.sh/ruff/rules/#pyflakes-f
     "I",    # isort, see https://docs.astral.sh/ruff/rules/#isort-i
     "N",    # pep8-naming, see https://docs.astral.sh/ruff/rules/#pep8-naming-n
+    "PTH",  # flake8-use-pathlib, https://docs.astral.sh/ruff/rules/#flake8-use-pathlib-pth
+    "TD",   # flake8-todos, https://docs.astral.sh/ruff/rules/#flake8-todos-td
 ]
-ignore = [
-    "E501",  # Line too long. Ignoring this so "ruff.formatter" manages line length.
-]
-
-# TODO: "preserve" leads to an error, although it is documented
-# and used in other repositories
-[tool.ruff.format]
-quote-style = "single"
+ignore = []
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
@@ -101,19 +109,17 @@ convention = "numpy"
 
 [tool.coverage.run]
 source = ["ansys.scade.pyhg"]
+patch = ["subprocess"]
 
 [tool.coverage.report]
 show_missing = true
+exclude_also = [
+    "@(abc\\.)?abstractmethod",
+]
 
 [tool.pytest.ini_options]
 testpaths = "tests"
 addopts = "-ra --cov=ansys.scade.pyhg --cov-report html:.cov/html --cov-branch --cov-report xml:.cov/xml --cov-report term -vv"
-
-[project.entry-points."ansys.scade.registry"]
-srg = "ansys.scade.pyhg:srg"
-
-[project.entry-points."ansys.scade.test.thg"]
-PYHG266 = "ansys.scade.pyhg.pyhg"
 
 [tool.towncrier]
 package = "ansys.scade.pyhg"
@@ -125,13 +131,13 @@ title_format = "`{version} <https://github.com/ansys/scade-pyhg/releases/tag/v{v
 issue_format = "`#{issue} <https://github.com/ansys/scade-pyhg/pull/{issue}>`_"
 
 [[tool.towncrier.type]]
-directory = "added"
-name = "Added"
+directory = "breaking"
+name = "Breaking"
 showcontent = true
 
 [[tool.towncrier.type]]
-directory = "changed"
-name = "Changed"
+directory = "added"
+name = "Added"
 showcontent = true
 
 [[tool.towncrier.type]]
@@ -140,17 +146,13 @@ name = "Fixed"
 showcontent = true
 
 [[tool.towncrier.type]]
-directory = "dependencies"
-name = "Dependencies"
+directory = "documentation"
+name = "Documentation"
 showcontent = true
 
 [[tool.towncrier.type]]
-directory = "miscellaneous"
-name = "Miscellaneous"
-showcontent = true
-[[tool.towncrier.type]]
-directory = "documentation"
-name = "Documentation"
+directory = "dependencies"
+name = "Dependencies"
 showcontent = true
 
 [[tool.towncrier.type]]
@@ -159,6 +161,41 @@ name = "Maintenance"
 showcontent = true
 
 [[tool.towncrier.type]]
+directory = "miscellaneous"
+name = "Miscellaneous"
+showcontent = true
+
+[[tool.towncrier.type]]
 directory = "test"
 name = "Test"
 showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changed"
+name = "Changed"
+showcontent = true
+
+[tool.codespell]
+ignore-words-list = ["synopsys"]
+
+[tool.numpydoc_validation]
+checks = [
+    'GL06',  # Found unknown section
+    'GL07',  # Sections are in the wrong order.
+    'GL08',  # The object does not have a docstring
+    'GL09',  # Deprecation warning should precede extended summary
+    'GL10',  # reST directives {directives} must be followed by two colons
+    'SS01',  # No summary found
+    'SS02',  # Summary does not start with a capital letter
+    'SS03',  # Summary does not end with a period
+    'SS04',  # Summary contains heading whitespaces
+    # "SS05", # Summary must start with infinitive verb, not third person
+    'RT02',  # The first line of the Returns section should contain only the
+    # type, unless multiple values are being returned"
+]
+exclude = [
+    '\._',  # ignore private definitions
+    'conftest.',
+    'test.',
+]
+

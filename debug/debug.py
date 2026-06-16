@@ -28,6 +28,7 @@
 
 import argparse
 import os
+from pathlib import Path
 
 from ansys.scade.apitools import declare_project
 from ansys.scade.apitools.info import get_scade_home
@@ -52,7 +53,7 @@ parser.add_argument(
 )
 options = parser.parse_args()
 
-os.makedirs(options.directory, exist_ok=True)
+Path(options.directory).mkdir(exist_ok=True)
 
 assert declare_project  # nosec B101  # declare_project must be defined on Windows
 declare_project(options.project)

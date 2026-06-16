@@ -32,7 +32,7 @@ keywords=["Scade", "Test", "Harness"]
 
 [project.optional-dependencies]
 build = [
-    "build==1.4.1",
+    "build==1.5.0",
     "twine==6.2.0"
 ]
 tests = [
@@ -43,7 +43,7 @@ tests = [
     "ansys-scade-python-wrapper >= 2.3.0",
 ]
 doc = [
-    "ansys-sphinx-theme[autoapi]==1.7.2; python_version >= '3.12'",
+    "ansys-sphinx-theme[autoapi]==1.8.1; python_version >= '3.12'",
     "ansys-sphinx-theme[autoapi]==1.6.4; python_version <= '3.10'",
     "numpydoc==1.10.0",
     "sphinx==9.1.0; python_version >= '3.12'",

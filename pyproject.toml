@@ -43,7 +43,7 @@ tests = [
     "ansys-scade-python-wrapper >= 2.3.0",
 ]
 doc = [
-    "ansys-sphinx-theme[autoapi]==1.8.1; python_version >= '3.12'",
+    "ansys-sphinx-theme[autoapi]==1.9.0; python_version >= '3.12'",
     "ansys-sphinx-theme[autoapi]==1.6.4; python_version <= '3.10'",
     "numpydoc==1.10.0",
     "sphinx==9.1.0; python_version >= '3.12'",
